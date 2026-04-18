@@ -38,7 +38,19 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Sonner />
+        <Sonner 
+          toastOptions={{
+            style: {
+              background: '#FFFFFF',
+              border: '2px solid #111213',
+              borderRadius: '0',
+              color: '#111213',
+              boxShadow: '4px 4px 0 rgba(17, 18, 19, 0.1)',
+              fontFamily: 'inherit',
+            },
+            className: 'font-bold uppercase tracking-widest text-xs',
+          }}
+        />
         <BrowserRouter>
           <div className="min-h-screen flex flex-col bg-vanqis-base-layout">
             <Header />
