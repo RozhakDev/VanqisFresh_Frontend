@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getProduct } from '@/lib/api';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, cn } from '@/lib/utils';
 import type { Product } from '@/types';
 import { useCart } from '@/stores/cart';
 import { useToast } from '@/hooks/use-toast';
@@ -29,10 +29,14 @@ export default function ProductDetail() {
   if (loading) return <DetailSkeleton />;
   if (error || !product) {
     return (
-      <div className="container-app py-20 text-center">
-        <AlertCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-        <h2 className="font-semibold text-lg mb-2">Produk tidak ditemukan</h2>
-        <Link to="/" className="text-sm text-accent-foreground hover:underline">Kembali ke katalog</Link>
+      <div className="container-app py-32 flex flex-col items-center justify-center text-center">
+        <div className="w-20 h-20 bg-vanqis-base-soft flex items-center justify-center mb-6">
+          <AlertCircle className="w-10 h-10 text-vanqis-base-text/40" strokeWidth={1} />
+        </div>
+        <h2 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-4">Produk Tidak Ditemukan</h2>
+        <Link to="/" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors border-b border-vanqis-base-text hover:border-vanqis-fresh-carrot pb-0.5">
+          Kembali ke Katalog
+        </Link>
       </div>
     );
   }
@@ -43,58 +47,110 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="container-app py-6">
-      <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Kembali
+    <div className="container-app py-8 md:py-12">
+      <Link 
+        to="/" 
+        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-base-text transition-colors mb-8 sm:mb-12 outline-none"
+      >
+        <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> 
+        Kembali ke Katalog
       </Link>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="aspect-square bg-secondary rounded-2xl overflow-hidden">
-          {product.image ? (
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <Package className="w-20 h-20 text-muted-foreground/30" />
-            </div>
-          )}
+      <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
+        
+        <div className="lg:col-span-7">
+          <div className="aspect-[4/3] sm:aspect-square bg-vanqis-base-soft/30 border border-vanqis-base-soft relative overflow-hidden flex items-center justify-center p-8 group">
+            {product.image ? (
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700" 
+              />
+            ) : (
+              <Package className="w-32 h-32 text-vanqis-base-text/10" strokeWidth={0.5} />
+            )}
+            
+            <span className="absolute top-0 left-0 bg-vanqis-base-text text-vanqis-base-white text-[10px] font-bold uppercase tracking-widest px-4 py-2">
+              {product.category_name}
+            </span>
+
+            {!product.is_available && (
+              <div className="absolute inset-0 bg-vanqis-base-white/80 backdrop-blur-[2px] flex items-center justify-center">
+                <span className="border-2 border-vanqis-base-text text-vanqis-base-text text-xs font-black uppercase tracking-[0.3em] px-6 py-3 bg-vanqis-base-white">
+                  Sold Out
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-accent-foreground bg-accent w-fit px-3 py-1 rounded-full mb-3">
-            {product.category_name}
-          </span>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">{product.name}</h1>
-          <p className="text-2xl font-bold text-accent-foreground mb-4">{formatPrice(product.price)}</p>
-
-          <p className="text-muted-foreground leading-relaxed mb-6">{product.description}</p>
-
-          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-8">
-            <span className={`w-2 h-2 rounded-full ${product.is_available && product.stock > 0 ? 'bg-primary' : 'bg-destructive'}`} />
-            {product.is_available && product.stock > 0
-              ? `Stok tersedia: ${product.stock}`
-              : 'Stok habis'}
+        <div className="lg:col-span-5 flex flex-col pt-2 lg:pt-8">
+          
+          <div className="mb-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter text-vanqis-base-text leading-[1.1] mb-6">
+              {product.name}
+            </h1>
+            <p className="text-3xl font-bold text-vanqis-base-text">
+              {formatPrice(product.price)}
+            </p>
           </div>
 
-          {product.is_available && product.stock > 0 && (
-            <div className="mt-auto flex flex-col sm:flex-row gap-3">
-              <div className="flex items-center gap-0 border rounded-xl overflow-hidden">
-                <button onClick={() => setQty(q => Math.max(1, q - 1))} className="w-11 h-11 flex items-center justify-center hover:bg-secondary transition-colors">
-                  <Minus className="w-4 h-4" />
-                </button>
-                <span className="w-12 text-center font-semibold text-sm">{qty}</span>
-                <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="w-11 h-11 flex items-center justify-center hover:bg-secondary transition-colors">
-                  <Plus className="w-4 h-4" />
-                </button>
+          <div className="w-12 h-1 bg-vanqis-fresh-carrot mb-8" />
+
+          <div className="mb-10 space-y-6">
+            <p className="text-sm md:text-base text-vanqis-base-text/70 leading-relaxed font-medium">
+              {product.description}
+            </p>
+          </div>
+
+          <div className="mt-auto pt-8 border-t border-vanqis-base-soft">
+            <div className="flex flex-col gap-6">
+              
+              <div className="flex items-center gap-3">
+                <div className={cn(
+                  "w-2 h-2 rounded-full animate-pulse",
+                  product.is_available && product.stock > 0 ? 'bg-vanqis-core-green' : 'bg-vanqis-fresh-tomato'
+                )} />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text">
+                  {product.is_available && product.stock > 0
+                    ? `Stok Tersedia: ${product.stock}`
+                    : 'Stok Habis'}
+                </span>
               </div>
-              <button
-                onClick={handleAdd}
-                className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Tambah ke Keranjang
-              </button>
+
+              {product.is_available && product.stock > 0 && (
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex items-center border border-vanqis-base-text h-14 bg-vanqis-base-white w-full sm:w-auto shrink-0">
+                    <button 
+                      onClick={() => setQty(q => Math.max(1, q - 1))} 
+                      className="w-14 h-full flex items-center justify-center hover:bg-vanqis-base-soft transition-colors outline-none"
+                    >
+                      <Minus className="w-4 h-4 text-vanqis-base-text" strokeWidth={1.5} />
+                    </button>
+                    <span className="w-12 text-center font-black text-vanqis-base-text text-sm">
+                      {qty}
+                    </span>
+                    <button 
+                      onClick={() => setQty(q => Math.min(product.stock, q + 1))} 
+                      className="w-14 h-full flex items-center justify-center hover:bg-vanqis-base-soft transition-colors outline-none"
+                    >
+                      <Plus className="w-4 h-4 text-vanqis-base-text" strokeWidth={1.5} />
+                    </button>
+                  </div>
+                  
+                  <button
+                    onClick={handleAdd}
+                    className="flex-1 h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-vanqis-fresh-carrot transition-colors outline-none"
+                  >
+                    <ShoppingCart className="w-4 h-4" strokeWidth={2} />
+                    Tambah ke Keranjang
+                  </button>
+                </div>
+              )}
+
             </div>
-          )}
+          </div>
+
         </div>
       </div>
     </div>
