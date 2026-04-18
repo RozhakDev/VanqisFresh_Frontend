@@ -113,7 +113,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Nama Depan *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Budi" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
+                      <Input placeholder="Rozhak" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -126,7 +126,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Nama Belakang</FormLabel>
                     <FormControl>
-                      <Input placeholder="Santoso" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" value={field.value || ''} onChange={field.onChange} />
+                      <Input placeholder="Dev" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" value={field.value || ''} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -142,7 +142,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="email@contoh.com" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
+                      <Input type="email" placeholder="rozhak@rozhak.xyz" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -155,7 +155,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Nomor WhatsApp *</FormLabel>
                     <FormControl>
-                      <Input placeholder="081234567890" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
+                      <Input placeholder="083847921480" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
