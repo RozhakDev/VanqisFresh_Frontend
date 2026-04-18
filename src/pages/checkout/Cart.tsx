@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '@/stores/cart';
 import { formatPrice } from '@/lib/utils';
 import { Minus, Plus, Trash2, Package, ArrowRight } from 'lucide-react';
-import EmptyState from '@/components/EmptyState';
+import EmptyState from '@/components/shared/EmptyState';
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, totalPrice } = useCart();

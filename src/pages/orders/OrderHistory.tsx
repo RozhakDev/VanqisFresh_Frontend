@@ -7,7 +7,6 @@ import { id } from "date-fns/locale";
 import { 
   Loader2, 
   ShoppingBag, 
-  ChevronRight, 
   Clock, 
   CheckCircle2, 
   Package, 

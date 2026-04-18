@@ -2,11 +2,11 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getProducts, getCategories, getPromos } from '@/lib/api';
 import type { Product, Category, Promo } from '@/types';
-import ProductCard from '@/components/ProductCard';
-import CategoryFilter from '@/components/CategoryFilter';
-import PromoBanner from '@/components/PromoBanner';
-import { ProductGridSkeleton } from '@/components/LoadingSkeleton';
-import EmptyState from '@/components/EmptyState';
+import ProductCard from '@/components/catalog/ProductCard';
+import CategoryFilter from '@/components/catalog/CategoryFilter';
+import PromoBanner from '@/components/catalog/PromoBanner';
+import { ProductGridSkeleton } from '@/components/shared/LoadingSkeleton';
+import EmptyState from '@/components/shared/EmptyState';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Index() {

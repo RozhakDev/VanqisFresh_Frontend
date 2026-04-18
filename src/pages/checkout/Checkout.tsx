@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/auth';
 import api from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 import { toast } from 'sonner';
-import EmptyState from '@/components/EmptyState';
+import EmptyState from '@/components/shared/EmptyState';
 import { Loader2, MapPin, User, Phone, Edit2, ArrowRight } from 'lucide-react';
 
 export default function Checkout() {

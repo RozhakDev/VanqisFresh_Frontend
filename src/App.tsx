@@ -1,25 +1,24 @@
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuthStore } from "@/stores/auth";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Index from "./pages/Index";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import PaymentUpload from "./pages/PaymentUpload";
-import OrderStatus from "./pages/OrderStatus";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Profile from "./pages/auth/Profile";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import Home from "./pages/home/Home";
+import ProductDetail from "./pages/catalog/ProductDetail";
+import Cart from "./pages/checkout/Cart";
+import Checkout from "./pages/checkout/Checkout";
+import Payment from "./pages/checkout/Payment";
+import OrderDetail from "./pages/orders/OrderDetail";
+import NotFound from "./pages/errors/NotFound";
+import Login from "./pages/account/Login";
+import Register from "./pages/account/Register";
+import Profile from "./pages/account/Profile";
 
-import Orders from "./pages/Orders";
+import OrderHistory from "./pages/orders/OrderHistory";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +36,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
         <Sonner 
           toastOptions={{
             style: {
@@ -56,16 +54,16 @@ const App = () => {
             <Header />
             <main className="flex-1 pb-20 sm:pb-0">
               <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/orders" element={<Orders />} />
+                <Route path="/orders" element={<OrderHistory />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
-                <Route path="/payment/:publicId" element={<PaymentUpload />} />
-                <Route path="/order/:publicId" element={<OrderStatus />} />
+                <Route path="/payment/:publicId" element={<Payment />} />
+                <Route path="/order/:publicId" element={<OrderDetail />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

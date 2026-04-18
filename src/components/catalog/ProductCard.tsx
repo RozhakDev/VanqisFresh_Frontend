@@ -3,7 +3,7 @@ import { Plus, Package } from 'lucide-react';
 import type { Product } from '@/types';
 import { formatPrice, cn } from '@/lib/utils';
 import { useCart } from '@/stores/cart';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface Props {
   product: Product;
@@ -11,14 +11,15 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const addItem = useCart(s => s.addItem);
-  const { toast } = useToast();
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (!product.is_available || product.stock <= 0) return;
     addItem(product, 1);
-    toast({ title: 'Ditambahkan ke keranjang', description: product.name });
+    toast.success('Ditambahkan ke keranjang', {
+      description: product.name,
+    });
   };
 
   return (

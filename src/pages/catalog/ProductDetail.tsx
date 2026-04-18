@@ -4,8 +4,8 @@ import { getProduct } from '@/lib/api';
 import { formatPrice, cn } from '@/lib/utils';
 import type { Product } from '@/types';
 import { useCart } from '@/stores/cart';
-import { useToast } from '@/hooks/use-toast';
-import { DetailSkeleton } from '@/components/LoadingSkeleton';
+import { toast } from 'sonner';
+import { DetailSkeleton } from '@/components/shared/LoadingSkeleton';
 import { ArrowLeft, Minus, Plus, ShoppingCart, Package, AlertCircle } from 'lucide-react';
 
 export default function ProductDetail() {
@@ -15,7 +15,6 @@ export default function ProductDetail() {
   const [error, setError] = useState(false);
   const [qty, setQty] = useState(1);
   const addItem = useCart(s => s.addItem);
-  const { toast } = useToast();
 
   useEffect(() => {
     if (!id) return;
@@ -43,7 +42,9 @@ export default function ProductDetail() {
 
   const handleAdd = () => {
     addItem(product, qty);
-    toast({ title: 'Ditambahkan ke keranjang', description: `${qty}x ${product.name}` });
+    toast.success('Ditambahkan ke keranjang', {
+      description: `${qty}x ${product.name}`,
+    });
   };
 
   return (
