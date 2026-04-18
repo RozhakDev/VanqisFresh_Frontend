@@ -9,18 +9,22 @@ interface Props {
 
 export default function EmptyState({ title, description, showAction = true }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center mb-4">
-        <ShoppingBag className="w-8 h-8 text-muted-foreground" />
+    <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-vanqis-base-soft bg-vanqis-base-white/50">
+      <div className="w-20 h-20 bg-vanqis-base-soft flex items-center justify-center mb-8">
+        <ShoppingBag className="w-8 h-8 text-vanqis-base-text/40" strokeWidth={1} />
       </div>
-      <h3 className="font-semibold text-lg mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground mb-6 max-w-xs">{description}</p>
+      <h3 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-3">
+        {title}
+      </h3>
+      <p className="text-sm font-medium text-vanqis-base-text/60 mb-8 max-w-sm leading-relaxed">
+        {description}
+      </p>
       {showAction && (
         <Link
           to="/"
-          className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
+          className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors"
         >
-          Lihat Produk
+          Mulai Belanja
         </Link>
       )}
     </div>
