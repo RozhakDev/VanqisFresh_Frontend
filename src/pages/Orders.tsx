@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import api from "@/lib/api";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 import { 
@@ -12,29 +12,27 @@ import {
   CheckCircle2, 
   Package, 
   Truck, 
-  AlertCircle 
+  AlertCircle,
+  ArrowRight
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { OrderHistoryItem, OrderStatus } from "@/types";
 
 const getStatusConfig = (status: OrderStatus) => {
   switch (status) {
     case 'Pending':
-      return { color: 'bg-yellow-100 text-yellow-800 border-yellow-200', icon: Clock };
+      return { color: 'text-vanqis-fresh-tomato border-vanqis-fresh-tomato', icon: Clock };
     case 'Confirmed':
-      return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: CheckCircle2 };
+      return { color: 'text-vanqis-fresh-carrot border-vanqis-fresh-carrot', icon: CheckCircle2 };
     case 'Preparing':
-      return { color: 'bg-purple-100 text-purple-800 border-purple-200', icon: Package };
+      return { color: 'text-vanqis-fresh-grape border-vanqis-fresh-grape', icon: Package };
     case 'Processing':
-      return { color: 'bg-indigo-100 text-indigo-800 border-indigo-200', icon: Loader2 };
+      return { color: 'text-vanqis-fresh-banana border-vanqis-fresh-banana', icon: Loader2 };
     case 'Shipping':
-      return { color: 'bg-orange-100 text-orange-800 border-orange-200', icon: Truck };
+      return { color: 'text-vanqis-fresh-carrot border-vanqis-fresh-carrot', icon: Truck };
     case 'Completed':
-      return { color: 'bg-green-100 text-green-800 border-green-200', icon: CheckCircle2 };
+      return { color: 'text-vanqis-core-green border-vanqis-core-green', icon: CheckCircle2 };
     default:
-      return { color: 'bg-gray-100 text-gray-800 border-gray-200', icon: AlertCircle };
+      return { color: 'text-vanqis-base-text border-vanqis-base-text', icon: AlertCircle };
   }
 };
 
@@ -52,7 +50,7 @@ const Orders = () => {
   if (isLoading) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <Loader2 className="w-8 h-8 animate-spin text-vanqis-base-text" />
       </div>
     );
   }
@@ -60,72 +58,86 @@ const Orders = () => {
   const orders: OrderHistoryItem[] = data?.results || [];
 
   return (
-    <div className="container-app py-8 max-w-4xl mx-auto px-4">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <ShoppingBag className="w-6 h-6 text-primary" />
-        </div>
-        <h1 className="text-3xl font-bold">Riwayat Pesanan</h1>
+    <div className="container-app py-8 md:py-12 max-w-5xl mx-auto">
+      <div className="mb-10 pb-6 border-b border-vanqis-base-soft">
+        <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none">
+          Riwayat Pesanan
+        </h1>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mt-2">
+          Pantau status belanja Anda
+        </p>
       </div>
 
       {orders.length === 0 ? (
-        <Card className="text-center py-16">
-          <CardContent className="space-y-4">
-            <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center">
-              <ShoppingBag className="w-8 h-8 text-muted-foreground" />
-            </div>
-            <div className="space-y-2">
-              <CardTitle>Belum Ada Pesanan</CardTitle>
-              <p className="text-muted-foreground">
-                Sepertinya Anda belum pernah melakukan pemesanan buah atau sayur.
-              </p>
-            </div>
-            <Button onClick={() => navigate("/")} variant="outline">
-              Mulai Belanja
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-vanqis-base-soft bg-vanqis-base-white/50">
+          <div className="w-20 h-20 bg-vanqis-base-soft flex items-center justify-center mb-8">
+            <ShoppingBag className="w-8 h-8 text-vanqis-base-text/40" strokeWidth={1} />
+          </div>
+          <h3 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-3">
+            Belum Ada Pesanan
+          </h3>
+          <p className="text-sm font-medium text-vanqis-base-text/60 mb-8 max-w-sm leading-relaxed">
+            Sepertinya Anda belum pernah melakukan pemesanan buah atau sayur.
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors outline-none"
+          >
+            Mulai Belanja
+          </button>
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-6">
           {orders.map((order) => {
             const statusConfig = getStatusConfig(order.status);
             const StatusIcon = statusConfig.icon;
 
             return (
-              <Card 
+              <div 
                 key={order.public_id} 
-                className="hover:shadow-md transition-shadow cursor-pointer group"
+                className="bg-vanqis-base-white border border-vanqis-base-soft hover:border-vanqis-base-text transition-colors cursor-pointer group flex flex-col md:flex-row md:items-center justify-between p-6 sm:p-8 relative outline-none"
                 onClick={() => navigate(`/order/${order.public_id}`)}
               >
-                <CardContent className="p-6">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">
-                          ID: {order.public_id.split('-')[0].toUpperCase()}
-                        </span>
-                        <Badge variant="outline" className={`${statusConfig.color} flex items-center gap-1 font-medium`}>
-                          <StatusIcon className="w-3 h-3" />
-                          {order.status}
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Dipesan pada {format(new Date(order.created_at), "d MMMM yyyy, HH:mm", { locale: id })}
-                      </p>
-                    </div>
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-vanqis-fresh-carrot scale-y-0 group-hover:scale-y-100 transition-transform origin-top" />
 
-                    <div className="flex items-center justify-between md:justify-end gap-6">
-                      <div className="text-right">
-                        <p className="text-xs text-muted-foreground uppercase font-semibold">Total Pembayaran</p>
-                        <p className="text-lg font-bold text-primary">{formatPrice(order.total_price)}</p>
-                      </div>
-                      <div className="p-2 rounded-full group-hover:bg-primary/10 transition-colors">
-                        <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                      </div>
-                    </div>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-bold font-mono uppercase tracking-widest text-vanqis-base-text bg-vanqis-base-soft/50 px-2 py-1">
+                      ID: {order.public_id.split('-')[0].toUpperCase()}
+                    </span>
+                    <span className={cn(
+                      "text-[9px] font-black uppercase tracking-widest px-2 py-1 border flex items-center gap-1.5",
+                      statusConfig.color
+                    )}>
+                      <StatusIcon className="w-3 h-3" strokeWidth={2.5} />
+                      {order.status}
+                    </span>
                   </div>
-                </CardContent>
-              </Card>
+                  
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/50">
+                      Waktu Pesanan
+                    </p>
+                    <p className="text-sm font-bold text-vanqis-base-text">
+                      {format(new Date(order.created_at), "d MMMM yyyy, HH:mm", { locale: id })}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 md:mt-0 flex items-end justify-between md:flex-col md:items-end gap-2 md:gap-4 border-t md:border-t-0 border-vanqis-base-soft pt-6 md:pt-0">
+                  <div className="text-left md:text-right">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-1">Total Pembayaran</p>
+                    <p className="text-2xl font-black tracking-tight text-vanqis-base-text leading-none group-hover:text-vanqis-fresh-carrot transition-colors">
+                      {formatPrice(order.total_price)}
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text group-hover:text-vanqis-fresh-carrot transition-colors">
+                    Lihat Detail
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>
