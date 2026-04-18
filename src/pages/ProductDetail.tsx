@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getProduct } from '@/lib/api';
-import { formatPrice } from '@/lib/api';
+import { formatPrice } from '@/lib/utils';
 import type { Product } from '@/types';
 import { useCart } from '@/stores/cart';
 import { useToast } from '@/hooks/use-toast';

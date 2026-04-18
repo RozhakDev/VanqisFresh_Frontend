@@ -1,88 +1,78 @@
-import axios from 'axios';
-import type {
-  Category, Product, PaginatedResponse, Promo,
-  PaymentMethod, StoreContact, CheckoutPayload, OrderResponse
-} from '@/types';
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
 const api = axios.create({
-  baseURL: 'https://api.vanqismart.com/api/v1',
-  timeout: 15000,
-  headers: { 'Content-Type': 'application/json' },
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-export async function getCategories(): Promise<Category[]> {
-  const { data } = await api.get('/catalog/categories/');
-  return data;
-}
+// Interceptor untuk menambahkan token ke header
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("auth-token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-export async function getProducts(params?: {
-  search?: string;
-  category?: number;
-  is_available?: boolean;
-  ordering?: string;
-  page?: number;
-  page_size?: number;
-}): Promise<PaginatedResponse<Product>> {
-  const { data } = await api.get('/catalog/products/', { params });
-  return data;
-}
+// Interceptor untuk menangani refresh token atau error 401
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    
+    // Jika error 401 dan bukan sedang mencoba login ulang
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const refreshToken = localStorage.getItem("refresh-token");
+      
+      if (refreshToken) {
+        try {
+          const response = await axios.post(`${API_BASE_URL}/users/token/refresh/`, {
+            refresh: refreshToken,
+          });
+          
+          const { access } = response.data;
+          localStorage.setItem("auth-token", access);
+          
+          originalRequest.headers.Authorization = `Bearer ${access}`;
+          return api(originalRequest);
+        } catch (refreshError) {
+          // Jika refresh token juga gagal, logout user
+          localStorage.removeItem("auth-token");
+          localStorage.removeItem("refresh-token");
+          window.location.href = "/login";
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
-export async function getProduct(id: number): Promise<Product> {
-  const { data } = await api.get(`/catalog/products/${id}/`);
-  return data;
-}
+export const getCategories = async () => {
+  const response = await api.get("/catalog/categories/");
+  return response.data;
+};
 
-export async function getPromos(): Promise<Promo[]> {
-  const { data } = await api.get('/catalog/promos/');
-  return data;
-}
+export const getProducts = async (params?: any) => {
+  const response = await api.get("/catalog/products/", { params });
+  return response.data;
+};
 
-export async function getPaymentMethods(): Promise<PaymentMethod[]> {
-  const { data } = await api.get('/core/payments/');
-  return data;
-}
+export const getProduct = async (id: number | string) => {
+  const response = await api.get(`/catalog/products/${id}/`);
+  return response.data;
+};
 
-export async function getStoreContacts(): Promise<StoreContact[]> {
-  const { data } = await api.get('/core/contacts/');
-  return data;
-}
+export const getPromos = async () => {
+  const response = await api.get("/catalog/promos/");
+  return response.data;
+};
 
-export async function createOrder(payload: CheckoutPayload): Promise<OrderResponse> {
-  const { data } = await api.post('/orders/checkout/', payload);
-  return data;
-}
-
-export async function getOrder(publicId: string, accessToken: string): Promise<OrderResponse> {
-  const { data } = await api.get(`/orders/${publicId}/`, {
-    // Hapus header X-Order-Token karena menyebabkan CORS error di browser
-    params: { access_token: accessToken }
-  });
-  return data;
-}
-
-export async function uploadPaymentProof(
-  publicId: string,
-  accessToken: string,
-  imageFile: File
-): Promise<{ message: string; data: { image: string; uploaded_at: string } }> {
-  const formData = new FormData();
-  formData.append('image', imageFile);
-  
-  // Menggunakan query params untuk token agar aman dari CORS preflight
-  const { data } = await api.post(`/orders/${publicId}/upload-proof/`, formData, {
-    params: { access_token: accessToken },
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  return data;
-}
-
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-}
+export default api;

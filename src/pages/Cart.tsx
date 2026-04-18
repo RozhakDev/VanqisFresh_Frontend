@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '@/stores/cart';
-import { formatPrice } from '@/lib/api';
+import { formatPrice } from '@/lib/utils';
 import { Minus, Plus, Trash2, Package } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 

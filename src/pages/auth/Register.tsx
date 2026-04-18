@@ -1,0 +1,209 @@
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import api from "@/lib/api";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+const registerSchema = z.object({
+  username: z.string().min(3, "Username minimal 3 karakter"),
+  password: z.string().min(6, "Password minimal 6 karakter"),
+  email: z.string().email("Email tidak valid"),
+  first_name: z.string().min(1, "Nama depan wajib diisi"),
+  last_name: z.string().optional(),
+  phone_number: z.string().min(10, "Nomor telepon minimal 10 digit").max(15, "Nomor telepon maksimal 15 digit"),
+  address: z.string().min(10, "Alamat lengkap minimal 10 karakter"),
+});
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
+
+const Register = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      email: "",
+      first_name: "",
+      last_name: "",
+      phone_number: "",
+      address: "",
+    },
+  });
+
+  const onSubmit = async (values: RegisterFormValues) => {
+    setIsLoading(true);
+    try {
+      await api.post("/users/register/", values);
+      toast.success("Registrasi berhasil! Silakan login.");
+      navigate("/login");
+    } catch (error: any) {
+      const errors = error.response?.data;
+      if (errors) {
+        Object.keys(errors).forEach((key) => {
+          toast.error(`${key}: ${errors[key][0]}`);
+        });
+      } else {
+        toast.error("Terjadi kesalahan saat registrasi");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center p-4 bg-muted/30">
+      <Card className="w-full max-w-lg">
+        <CardHeader className="space-y-1 text-center">
+          <CardTitle className="text-2xl font-bold">Daftar Akun</CardTitle>
+          <CardDescription>
+            Lengkapi data diri Anda untuk mulai berbelanja di VanqisFresh
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="h-[60vh] pr-4">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Username</FormLabel>
+                        <FormControl>
+                          <Input placeholder="username" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="••••••••" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="email@contoh.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="first_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nama Depan</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Budi" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="last_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nama Belakang (Opsional)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Santoso" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="phone_number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nomor WhatsApp</FormLabel>
+                      <FormControl>
+                        <Input placeholder="081234567890" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Alamat Lengkap</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Jl. Merdeka No. 10, RT 02/RW 05, Kec. Purwokerto, Banyumas 53114" 
+                          className="min-h-[100px]"
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? "Sedang mendaftar..." : "Daftar Sekarang"}
+                </Button>
+              </form>
+            </Form>
+          </ScrollArea>
+        </CardContent>
+        <CardFooter>
+          <div className="text-sm text-center w-full text-muted-foreground">
+            Sudah punya akun?{" "}
+            <Link to="/login" className="text-primary hover:underline font-medium">
+              Masuk di sini
+            </Link>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+};
+
+export default Register;

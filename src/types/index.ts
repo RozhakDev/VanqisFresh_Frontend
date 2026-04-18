@@ -1,3 +1,18 @@
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  address: string;
+}
+
+export interface AuthResponse {
+  access: string;
+  refresh: string;
+}
+
 export interface Category {
   id: number;
   name: string;
@@ -10,9 +25,14 @@ export interface Product {
   category_name: string;
   price: number;
   description: string;
-  image: string;
+  image: string | null;
   stock: number;
   is_available: boolean;
+}
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
 }
 
 export interface PaginatedResponse<T> {
@@ -35,9 +55,9 @@ export interface Promo {
 export interface PaymentMethod {
   id: number;
   name: string;
-  provider_type: 'bank' | 'e-wallet' | 'qris';
+  provider_type: 'Bank Transfer' | 'E-Wallet' | 'QRIS';
   account_number: string | null;
-  account_name: string;
+  account_name: string | null;
   qr_code: string | null;
 }
 
@@ -45,36 +65,39 @@ export interface StoreContact {
   id: number;
   platform: string;
   account_id: string;
-  url: string;
+  url: string | null;
 }
 
-export interface CartItem {
-  product: Product;
+export type OrderStatus = 
+  | 'Pending' 
+  | 'Confirmed' 
+  | 'Preparing' 
+  | 'Processing' 
+  | 'Shipping' 
+  | 'Completed';
+
+export interface OrderItem {
+  product_name: string;
   quantity: number;
+  price: number;
 }
 
-export interface CheckoutPayload {
-  customer_name: string;
-  customer_contact: string;
-  note?: string;
-  items: { product_id: number; quantity: number }[];
-}
-
-export interface OrderResponse {
-  id: number;
+export interface OrderDetail {
   public_id: string;
-  access_token: string;
-  upload_proof_url: string;
   customer_name: string;
   customer_contact: string;
-  note: string;
+  shipping_address: string;
+  note: string | null;
   total_price: number;
-  status: 'Pending' | 'Confirmed' | 'Completed';
-  items: {
-    product_name: string;
-    quantity: number;
-    price: number;
-  }[];
-  payment_proof: 'Sudah diunggah' | 'Belum diunggah';
+  status: OrderStatus;
+  items: OrderItem[];
+  payment_proof: string;
+  created_at: string;
+}
+
+export interface OrderHistoryItem {
+  public_id: string;
+  total_price: number;
+  status: OrderStatus;
   created_at: string;
 }

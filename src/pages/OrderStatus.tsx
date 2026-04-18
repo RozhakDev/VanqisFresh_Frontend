@@ -1,186 +1,224 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { getOrder, formatPrice } from '@/lib/api';
-import type { OrderResponse } from '@/types';
-import { Loader2, Package, CheckCircle2, Clock, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/lib/api";
+import { formatPrice } from "@/lib/utils";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
+import { 
+  Loader2, 
+  MapPin, 
+  Phone, 
+  User, 
+  Calendar, 
+  ArrowLeft,
+  FileText,
+  CreditCard,
+  Image as ImageIcon
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { OrderDetail, OrderStatus } from "@/types";
 
-export default function OrderStatus() {
-  const { publicId } = useParams<{ publicId: string }>();
-  const [order, setOrder] = useState<OrderResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const getStatusConfig = (status: OrderStatus) => {
+  switch (status) {
+    case 'Pending':
+      return { color: 'bg-yellow-100 text-yellow-800 border-yellow-200' };
+    case 'Confirmed':
+      return { color: 'bg-blue-100 text-blue-800 border-blue-200' };
+    case 'Preparing':
+      return { color: 'bg-purple-100 text-purple-800 border-purple-200' };
+    case 'Processing':
+      return { color: 'bg-indigo-100 text-indigo-800 border-indigo-200' };
+    case 'Shipping':
+      return { color: 'bg-orange-100 text-orange-800 border-orange-200' };
+    case 'Completed':
+      return { color: 'bg-green-100 text-green-800 border-green-200' };
+    default:
+      return { color: 'bg-gray-100 text-gray-800 border-gray-200' };
+  }
+};
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      if (!publicId) return;
-      
-      const accessToken = localStorage.getItem(`order_token_${publicId}`);
-      console.log('Fetching order:', publicId, 'with token:', accessToken);
+const OrderStatusPage = () => {
+  const { publicId } = useParams();
+  const navigate = useNavigate();
 
-      if (!accessToken) {
-        setError('Token akses tidak ditemukan. Pastikan Anda mengakses dari link yang benar.');
-        setLoading(false);
-        return;
-      }
+  const { data: order, isLoading, error } = useQuery<OrderDetail>({
+    queryKey: ["order", publicId],
+    queryFn: async () => {
+      const response = await api.get(`/orders/${publicId}/`);
+      return response.data;
+    },
+    enabled: !!publicId,
+  });
 
-      try {
-        const data = await getOrder(publicId, accessToken);
-        setOrder(data);
-      } catch (err: any) {
-        console.error('API Error in OrderStatus:', err);
-        const detail = err.response?.data?.detail;
-        const status = err.response?.status;
-        const message = err.message;
-        
-        if (status === 404) {
-          setError('Pesanan tidak ditemukan atau token tidak valid.');
-        } else {
-          setError(detail || message || 'Gagal mengambil detail pesanan.');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrder();
-  }, [publicId]);
-
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="container-app py-20 flex flex-col items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
-        <p className="text-muted-foreground">Memuat detail pesanan...</p>
+      <div className="flex h-[80vh] items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
 
   if (error || !order) {
     return (
-      <div className="container-app py-20 text-center">
-        <AlertCircle className="w-12 h-12 text-destructive mx-auto mb-4" />
-        <h2 className="text-xl font-bold mb-2">Terjadi Kesalahan</h2>
-        <p className="text-muted-foreground mb-6">{error || 'Pesanan tidak ditemukan.'}</p>
-        <Link to="/" className="inline-flex items-center gap-2 text-primary hover:underline">
-          <ArrowLeft className="w-4 h-4" /> Kembali ke Beranda
-        </Link>
+      <div className="container-app py-16 text-center">
+        <h2 className="text-2xl font-bold mb-4">Pesanan Tidak Ditemukan</h2>
+        <p className="text-muted-foreground mb-8">Maaf, kami tidak dapat menemukan informasi untuk pesanan ini.</p>
+        <Button onClick={() => navigate("/orders")}>Kembali ke Riwayat</Button>
       </div>
     );
   }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Pending': return <Clock className="w-5 h-5 text-warning" />;
-      case 'Confirmed': return <CheckCircle2 className="w-5 h-5 text-success" />;
-      case 'Completed': return <CheckCircle className="w-5 h-5 text-primary" />;
-      default: return <Clock className="w-5 h-5 text-muted-foreground" />;
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'Pending': return 'Menunggu Verifikasi';
-      case 'Confirmed': return 'Pesanan Dikonfirmasi';
-      case 'Completed': return 'Pesanan Selesai';
-      default: return status;
-    }
-  };
+  const statusConfig = getStatusConfig(order.status);
 
   return (
-    <div className="container-app py-6 max-w-2xl mx-auto">
-      <div className="flex items-center gap-4 mb-6">
-        <Link to="/" className="p-2 rounded-xl bg-secondary hover:bg-border transition-colors">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <h1 className="text-2xl font-bold">Status Pesanan</h1>
-      </div>
+    <div className="container-app py-6 max-w-4xl mx-auto px-4">
+      <Button 
+        variant="ghost" 
+        className="mb-6 -ml-2" 
+        onClick={() => navigate("/orders")}
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Kembali ke Riwayat
+      </Button>
 
-      <div className="grid gap-6">
-        {/* Status Header */}
-        <div className="bg-card rounded-2xl border p-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-              order.status === 'Pending' ? 'bg-warning/10 text-warning' : 
-              order.status === 'Confirmed' ? 'bg-success/10 text-success' : 'bg-primary/10 text-primary'
-            }`}>
-              {getStatusIcon(order.status)}
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Status Saat Ini</p>
-              <p className="font-bold">{getStatusLabel(order.status)}</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-muted-foreground">Order ID</p>
-            <p className="font-mono text-xs">{order.public_id.slice(0, 8)}...</p>
-          </div>
-        </div>
-
-        {/* Action Call for Upload Proof */}
-        {order.status === 'Pending' && order.payment_proof === 'Belum diunggah' && (
-          <div className="bg-accent/50 rounded-2xl border border-primary/20 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <p className="font-bold text-accent-foreground">Bukti Pembayaran Belum Ada</p>
-              <p className="text-sm text-muted-foreground">Silakan upload bukti transfer agar pesanan segera diproses.</p>
-            </div>
-            <Link 
-              to={`/payment/${order.public_id}`} 
-              state={{ accessToken: localStorage.getItem(`order_token_${order.public_id}`), order }}
-              className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity shrink-0"
-            >
-              Upload Sekarang
-            </Link>
-          </div>
-        )}
-
-        {/* Order Details */}
-        <div className="bg-card rounded-2xl border p-6 space-y-4">
-          <h2 className="font-bold flex items-center gap-2">
-            <Package className="w-4 h-4" /> Detail Pesanan
-          </h2>
-          
-          <div className="space-y-3">
-            {order.items.map((item, idx) => (
-              <div key={idx} className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{item.product_name} x{item.quantity}</span>
-                <span className="font-medium">{formatPrice(item.price * item.quantity)}</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 space-y-6">
+          {/* Header Status */}
+          <Card className="overflow-hidden border-t-4 border-t-primary">
+            <CardHeader className="bg-muted/30 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">ID Pesanan</p>
+                  <h1 className="text-xl font-bold">{order.public_id}</h1>
+                </div>
+                <Badge className={`${statusConfig.color} text-sm px-4 py-1`}>
+                  {order.status}
+                </Badge>
               </div>
-            ))}
-          </div>
-
-          <div className="border-t pt-4 flex justify-between font-bold text-lg">
-            <span>Total Bayar</span>
-            <span className="text-primary">{formatPrice(order.total_price)}</span>
-          </div>
-        </div>
-
-        {/* Customer Info */}
-        <div className="bg-card rounded-2xl border p-6 space-y-4">
-          <h2 className="font-bold">Informasi Pengiriman</h2>
-          <div className="grid gap-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Nama Pemesan</span>
-              <span className="font-medium">{order.customer_name}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Kontak</span>
-              <span className="font-medium">{order.customer_contact}</span>
-            </div>
-            {order.note && (
-              <div className="flex flex-col gap-1">
-                <span className="text-muted-foreground">Catatan</span>
-                <span className="p-3 bg-secondary rounded-lg italic">{order.note}</span>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-muted rounded-full">
+                    <Calendar className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Waktu Pesanan</p>
+                    <p className="text-sm font-medium">
+                      {format(new Date(order.created_at), "d MMM yyyy, HH:mm", { locale: id })}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-muted rounded-full">
+                    <CreditCard className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Pembayaran</p>
+                    <p className="text-sm font-medium">{order.payment_proof}</p>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
+            </CardContent>
+          </Card>
+
+          {/* Rincian Produk */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <FileText className="w-5 h-5 text-primary" />
+                Rincian Produk
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                {order.items.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-start py-2 border-b last:border-0">
+                    <div className="space-y-1">
+                      <p className="font-semibold text-sm">{item.product_name}</p>
+                      <p className="text-xs text-muted-foreground">{item.quantity} x {formatPrice(item.price)}</p>
+                    </div>
+                    <p className="font-bold text-sm">{formatPrice(item.price * item.quantity)}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="pt-4 space-y-2">
+                <div className="flex justify-between text-base font-bold text-primary pt-2 border-t">
+                  <span>Total Harga</span>
+                  <span>{formatPrice(order.total_price)}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Bukti Pembayaran */}
+          {order.status === 'Pending' && order.payment_proof === 'Belum diunggah' && (
+            <Card className="border-dashed border-2 bg-yellow-50/30">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2 text-yellow-700">
+                  <ImageIcon className="w-5 h-5" />
+                  Konfirmasi Pembayaran
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-yellow-700/80 mb-4">
+                  Pesanan Anda sudah diterima, namun kami belum menerima bukti transfer. Silakan unggah bukti pembayaran agar kami dapat segera memproses pesanan Anda.
+                </p>
+                <Button 
+                  onClick={() => navigate(`/payment/${order.public_id}`)}
+                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-white"
+                >
+                  Unggah Bukti Pembayaran
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </div>
-        
-        <div className="text-center text-xs text-muted-foreground">
-          Dipesan pada {new Date(order.created_at).toLocaleString('id-ID', { 
-            dateStyle: 'long', 
-            timeStyle: 'short' 
-          })}
+
+        <div className="space-y-6">
+          {/* Informasi Pengiriman */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Informasi Pengiriman</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex gap-3">
+                  <User className="w-4 h-4 text-muted-foreground mt-0.5" />
+                  <div className="text-sm">
+                    <p className="text-muted-foreground text-xs uppercase font-semibold">Nama Penerima</p>
+                    <p className="font-medium">{order.customer_name}</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <Phone className="w-4 h-4 text-muted-foreground mt-0.5" />
+                  <div className="text-sm">
+                    <p className="text-muted-foreground text-xs uppercase font-semibold">Kontak</p>
+                    <p className="font-medium">{order.customer_contact}</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
+                  <div className="text-sm">
+                    <p className="text-muted-foreground text-xs uppercase font-semibold">Alamat</p>
+                    <p className="font-medium">{order.shipping_address}</p>
+                  </div>
+                </div>
+              </div>
+              {order.note && (
+                <div className="pt-4 border-t">
+                  <p className="text-xs text-muted-foreground uppercase font-semibold mb-1">Catatan</p>
+                  <p className="text-sm italic text-muted-foreground">"{order.note}"</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default OrderStatusPage;

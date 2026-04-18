@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Plus, Package } from 'lucide-react';
 import type { Product } from '@/types';
-import { formatPrice } from '@/lib/api';
+import { formatPrice } from '@/lib/utils';
 import { useCart } from '@/stores/cart';
 import { useToast } from '@/hooks/use-toast';
 
