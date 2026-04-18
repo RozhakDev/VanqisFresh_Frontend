@@ -75,4 +75,9 @@ export const getPromos = async () => {
   return response.data;
 };
 
+export const getStoreContacts = async () => {
+  const response = await api.get("/core/contacts/");
+  return response.data;
+};
+
 export default api;

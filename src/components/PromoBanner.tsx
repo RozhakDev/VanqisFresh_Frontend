@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import type { Promo } from '@/types';
-import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from './ui/button';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Props {
   promos: Promo[];
@@ -19,67 +19,83 @@ export default function PromoBanner({ promos }: Props) {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  // Autoplay Manual menggunakan useEffect
   useEffect(() => {
     if (!emblaApi) return;
     
     const intervalId = setInterval(() => {
       emblaApi.scrollNext();
-    }, 5000);
+    }, 6000);
 
     return () => clearInterval(intervalId);
   }, [emblaApi]);
 
   if (!promos || promos.length === 0) return null;
 
+  const promoColors = [
+    "bg-vanqis-fresh-carrot text-vanqis-base-white",
+    "bg-vanqis-base-text text-vanqis-base-white",
+    "bg-vanqis-fresh-tomato text-vanqis-base-white",
+    "bg-vanqis-fresh-grape text-vanqis-base-white",
+  ];
+
   return (
-    <div className="relative group">
-      <div className="overflow-hidden rounded-2xl border border-primary/10 bg-accent" ref={emblaRef}>
+    <div className="relative group w-full mb-8">
+      <div className="overflow-hidden border border-vanqis-base-soft" ref={emblaRef}>
         <div className="flex">
-          {promos.map((promo) => (
-            <div key={promo.id} className="flex-[0_0_100%] min-w-0 p-6 sm:p-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <Sparkles className="w-6 h-6 text-primary" />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="font-bold text-xl text-accent-foreground leading-tight">
+          {promos.map((promo, index) => {
+            const colorClass = promoColors[index % promoColors.length];
+            return (
+              <div 
+                key={promo.id} 
+                className={cn(
+                  "flex-[0_0_100%] min-w-0 p-8 sm:p-12 md:p-16 flex flex-col justify-center min-h-[240px] md:min-h-[320px] transition-colors",
+                  colorClass
+                )}
+              >
+                <div className="max-w-2xl space-y-4">
+                  <div className="inline-block px-3 py-1 border border-current text-[10px] font-bold uppercase tracking-widest mb-2">
+                    Special Offer
+                  </div>
+                  <h3 className="font-black text-3xl md:text-5xl leading-[1.1] tracking-tight">
                     {promo.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+                  <p className="text-sm md:text-base font-medium opacity-90 leading-relaxed max-w-xl">
                     {promo.description}
                   </p>
+                  <div className="pt-4">
+                    <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:gap-4 transition-all duration-300">
+                      Shop Now <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
       {promos.length > 1 && (
         <>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 backdrop-blur-sm hidden sm:flex"
+          <button
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-vanqis-base-white/10 backdrop-blur-md border border-vanqis-base-white/20 text-vanqis-base-white hover:bg-vanqis-base-white hover:text-vanqis-base-text transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
             onClick={scrollPrev}
+            aria-label="Previous promo"
           >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 backdrop-blur-sm hidden sm:flex"
+            <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
+          </button>
+          <button
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-vanqis-base-white/10 backdrop-blur-md border border-vanqis-base-white/20 text-vanqis-base-white hover:bg-vanqis-base-white hover:text-vanqis-base-text transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
             onClick={scrollNext}
+            aria-label="Next promo"
           >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
+            <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
+          </button>
           
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+          <div className="absolute bottom-6 left-8 sm:left-12 md:left-16 flex gap-2">
             {promos.map((_, index) => (
               <div 
                 key={index} 
-                className="w-1.5 h-1.5 rounded-full bg-primary/20"
+                className="w-8 h-0.5 bg-vanqis-base-white/30"
               />
             ))}
           </div>

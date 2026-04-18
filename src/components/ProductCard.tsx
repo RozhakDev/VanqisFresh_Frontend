@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Plus, Package } from 'lucide-react';
 import type { Product } from '@/types';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, cn } from '@/lib/utils';
 import { useCart } from '@/stores/cart';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,44 +24,51 @@ export default function ProductCard({ product }: Props) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-all duration-300"
+      className="group flex flex-col bg-vanqis-base-white border border-vanqis-base-soft hover:border-vanqis-base-text transition-colors duration-300 relative h-full"
     >
-      <div className="aspect-square bg-secondary relative overflow-hidden">
+      <div className="aspect-[4/3] bg-vanqis-base-soft/50 relative overflow-hidden flex items-center justify-center border-b border-vanqis-base-soft p-4">
         {product.image ? (
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Package className="w-12 h-12 text-muted-foreground/40" />
-          </div>
+          <Package className="w-10 h-10 text-vanqis-base-text/20" strokeWidth={1} />
         )}
-        {!product.is_available && (
-          <div className="absolute inset-0 bg-foreground/50 flex items-center justify-center">
-            <span className="bg-card text-foreground text-xs font-semibold px-3 py-1 rounded-full">Habis</span>
-          </div>
-        )}
-        <span className="absolute top-3 left-3 text-[11px] font-medium bg-card/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-muted-foreground">
+        
+        <span className="absolute top-0 left-0 bg-vanqis-base-white border-b border-r border-vanqis-base-soft text-[9px] font-bold uppercase tracking-widest px-2 py-1 text-vanqis-base-text/70">
           {product.category_name}
         </span>
+
+        {!product.is_available && (
+          <div className="absolute inset-0 bg-vanqis-base-white/80 backdrop-blur-[2px] flex items-center justify-center">
+            <span className="border border-vanqis-base-text text-vanqis-base-text text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-vanqis-base-white">
+              Sold Out
+            </span>
+          </div>
+        )}
       </div>
 
-      <div className="p-4">
-        <h3 className="font-semibold text-sm leading-snug line-clamp-2 mb-2 group-hover:text-accent-foreground transition-colors">
+      <div className="p-4 sm:p-5 flex flex-col flex-1">
+        <h3 className="font-bold text-sm leading-tight line-clamp-2 mb-4 group-hover:text-vanqis-fresh-carrot transition-colors text-vanqis-base-text">
           {product.name}
         </h3>
-        <div className="flex items-center justify-between">
-          <p className="font-bold text-base">{formatPrice(product.price)}</p>
+        
+        <div className="mt-auto flex items-end justify-between gap-2">
+          <div className="flex flex-col">
+            <span className="text-[10px] font-medium text-vanqis-base-text/50 uppercase tracking-wider mb-0.5">Price</span>
+            <p className="font-black text-base text-vanqis-base-text">{formatPrice(product.price)}</p>
+          </div>
+          
           {product.is_available && product.stock > 0 && (
             <button
               onClick={handleAdd}
-              className="w-8 h-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
-              aria-label={`Tambah ${product.name}`}
+              className="shrink-0 w-10 h-10 bg-vanqis-base-white border border-vanqis-base-text text-vanqis-base-text flex items-center justify-center hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-colors"
+              aria-label={`Add ${product.name} to cart`}
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-5 h-5" strokeWidth={1.5} />
             </button>
           )}
         </div>

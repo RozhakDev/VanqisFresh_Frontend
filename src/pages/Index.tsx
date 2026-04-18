@@ -59,22 +59,28 @@ export default function Index() {
     <div className="container-app py-6 space-y-6">
       {!searchQuery && <PromoBanner promos={promos} />}
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pb-6 border-b border-vanqis-base-soft">
         <div>
-          <h1 className="text-2xl font-bold">
-            {searchQuery ? `Hasil pencarian "${searchQuery}"` : 'Katalog Produk'}
+          <h1 className="text-2xl font-black uppercase tracking-tight text-vanqis-base-text">
+            {searchQuery ? `Hasil Pencarian "${searchQuery}"` : 'Katalog Produk'}
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">Buah & sayur segar pilihan</p>
+          <p className="text-xs font-bold tracking-widest uppercase text-vanqis-base-text/50 mt-1">Buah & sayur segar pilihan</p>
         </div>
-        <select
-          value={ordering}
-          onChange={e => setOrdering(e.target.value)}
-          className="h-10 px-3 rounded-xl bg-secondary text-sm border-0 focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          <option value="-created_at">Terbaru</option>
-          <option value="price">Harga: Rendah - Tinggi</option>
-          <option value="-price">Harga: Tinggi - Rendah</option>
-        </select>
+        
+        <div className="relative group shrink-0">
+          <select
+            value={ordering}
+            onChange={e => setOrdering(e.target.value)}
+            className="appearance-none w-full sm:w-auto h-11 pl-4 pr-10 border border-vanqis-base-soft bg-transparent text-vanqis-base-text text-xs font-bold uppercase tracking-wider focus:outline-none focus:border-vanqis-base-text transition-colors cursor-pointer"
+          >
+            <option value="-created_at">Terbaru</option>
+            <option value="price">Harga Terendah</option>
+            <option value="-price">Harga Tertinggi</option>
+          </select>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-vanqis-base-text text-xs">
+            ▼
+          </div>
+        </div>
       </div>
 
       <CategoryFilter
@@ -100,23 +106,23 @@ export default function Index() {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 pt-4">
+            <div className="flex items-center justify-center gap-4 pt-12 border-t border-vanqis-base-soft mt-8">
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center disabled:opacity-40 hover:bg-border transition-colors"
+                className="w-11 h-11 border border-vanqis-base-soft flex items-center justify-center disabled:opacity-30 hover:border-vanqis-base-text hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-all disabled:hover:bg-transparent disabled:hover:text-vanqis-base-text disabled:hover:border-vanqis-base-soft text-vanqis-base-text"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
               </button>
-              <span className="text-sm font-medium px-4">
+              <span className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text px-4">
                 {page} / {totalPages}
               </span>
               <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center disabled:opacity-40 hover:bg-border transition-colors"
+                className="w-11 h-11 border border-vanqis-base-soft flex items-center justify-center disabled:opacity-30 hover:border-vanqis-base-text hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-all disabled:hover:bg-transparent disabled:hover:text-vanqis-base-text disabled:hover:border-vanqis-base-soft text-vanqis-base-text"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
               </button>
             </div>
           )}

@@ -1,4 +1,5 @@
 import type { Category } from '@/types';
+import { cn } from '@/lib/utils';
 
 interface Props {
   categories: Category[];
@@ -8,28 +9,36 @@ interface Props {
 
 export default function CategoryFilter({ categories, selected, onSelect }: Props) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+    <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-none border-b border-vanqis-base-soft">
       <button
         onClick={() => onSelect(null)}
-        className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+        className={cn(
+          "shrink-0 pb-3 text-xs font-black uppercase tracking-widest transition-colors relative outline-none",
           selected === null
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-secondary text-muted-foreground hover:text-foreground'
-        }`}
+            ? "text-vanqis-base-text"
+            : "text-vanqis-base-text/40 hover:text-vanqis-base-text"
+        )}
       >
-        Semua
+        All
+        {selected === null && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-fresh-carrot" />
+        )}
       </button>
       {categories.map(cat => (
         <button
           key={cat.id}
           onClick={() => onSelect(cat.id)}
-          className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+          className={cn(
+            "shrink-0 pb-3 text-xs font-black uppercase tracking-widest transition-colors relative outline-none",
             selected === cat.id
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-secondary text-muted-foreground hover:text-foreground'
-          }`}
+              ? "text-vanqis-base-text"
+              : "text-vanqis-base-text/40 hover:text-vanqis-base-text"
+          )}
         >
           {cat.name}
+          {selected === cat.id && (
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-fresh-carrot" />
+          )}
         </button>
       ))}
     </div>
