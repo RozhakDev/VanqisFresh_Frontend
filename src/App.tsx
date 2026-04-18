@@ -40,7 +40,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="min-h-screen flex flex-col bg-background">
+          <div className="min-h-screen flex flex-col bg-vanqis-base-layout">
             <Header />
             <main className="flex-1 pb-20 sm:pb-0">
               <Routes>

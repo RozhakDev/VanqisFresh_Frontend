@@ -46,8 +46,9 @@ export default {
         vanqis: {
           base: {
             white: "#FFFFFF",
-            soft: "#F3F4F6",
-            text: "#1F2937",
+            layout: "#F6F8F9",
+            soft: "#E2E4E7",
+            text: "#111213",
           },
           core: {
             green: "#2F855A",

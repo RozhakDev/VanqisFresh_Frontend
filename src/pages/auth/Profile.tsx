@@ -79,18 +79,18 @@ export default function Profile() {
       setIsLoading(false);
     }
   };
+return (
+  <div className="container-app py-8 max-w-3xl mx-auto px-4">
+    <button 
+      className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors mb-8 outline-none"
+      onClick={() => navigate("/")}
+    >
+      <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
+      Kembali ke Beranda
+    </button>
 
-  return (
-    <div className="container-app py-8 max-w-3xl mx-auto px-4">
-      <button 
-        className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors mb-8 outline-none"
-        onClick={() => navigate("/")}
-      >
-        <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-        Kembali ke Beranda
-      </button>
-
-      <div className="bg-vanqis-base-white border border-vanqis-base-soft p-8 md:p-12 relative overflow-hidden">
+    <div className="bg-vanqis-base-white border border-vanqis-base-soft p-8 md:p-12 relative overflow-hidden shadow-vanqis-base-text/5">
+      {/* Decorative corner element */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-vanqis-base-soft/20 rounded-bl-[100px] -z-10" />
         
         <div className="flex items-center gap-6 mb-10 pb-8 border-b border-vanqis-base-soft">
@@ -113,7 +113,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Nama Depan *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rozhak" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
+                      <Input placeholder="Rozhak" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -126,7 +126,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Nama Belakang</FormLabel>
                     <FormControl>
-                      <Input placeholder="Dev" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" value={field.value || ''} onChange={field.onChange} />
+                      <Input placeholder="Dev" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" value={field.value || ''} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -142,7 +142,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="rozhak@rozhak.xyz" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
+                      <Input type="email" placeholder="rozhak@rozhak.xyz" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -155,7 +155,7 @@ export default function Profile() {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Nomor WhatsApp *</FormLabel>
                     <FormControl>
-                      <Input placeholder="083847921480" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm" {...field} />
+                      <Input placeholder="083847921480" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                     </FormControl>
                     <FormMessage className="text-xs text-vanqis-fresh-tomato" />
                   </FormItem>
@@ -172,7 +172,7 @@ export default function Profile() {
                   <FormControl>
                     <Textarea 
                       placeholder="Detail alamat untuk pengiriman..." 
-                      className="min-h-[120px] resize-y rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text p-4 text-sm"
+                      className="min-h-[120px] resize-y rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text p-4 text-sm bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40"
                       {...field} 
                     />
                   </FormControl>

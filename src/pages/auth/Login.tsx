@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-vanqis-base-soft/20 py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen flex items-center justify-center bg-vanqis-base-layout py-12 px-4 sm:px-6 lg:px-8 relative">
       <button 
         className="absolute top-8 left-6 sm:left-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors outline-none"
         onClick={() => navigate("/")}
@@ -66,7 +66,7 @@ const Login = () => {
         Kembali
       </button>
 
-      <div className="w-full max-w-[440px] bg-vanqis-base-white p-8 sm:p-12 border border-vanqis-base-soft shadow-sm">
+      <div className="w-full max-w-[440px] bg-vanqis-base-white p-8 sm:p-12 border border-vanqis-base-soft shadow-vanqis-base-text/5 relative">
         <div className="flex flex-col items-center text-center mb-10">
           <h1 className="text-2xl font-black uppercase tracking-tight text-vanqis-base-text mb-2">
             Masuk Akun
@@ -87,7 +87,7 @@ const Login = () => {
                   <FormControl>
                     <Input 
                       placeholder="Contoh: rozhak_official" 
-                      className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-transparent transition-colors hover:border-vanqis-base-text/40" 
+                      className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" 
                       {...field} 
                     />
                   </FormControl>
@@ -108,7 +108,7 @@ const Login = () => {
                     <Input 
                       type="password" 
                       placeholder="••••••••" 
-                      className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-transparent transition-colors hover:border-vanqis-base-text/40" 
+                      className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" 
                       {...field} 
                     />
                   </FormControl>
