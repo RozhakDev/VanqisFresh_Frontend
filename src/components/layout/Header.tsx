@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 
 /**
  * Menampilkan header global, pencarian, akun, dan navigasi bawah pada mobile.
+ * Dirancang dengan estetika editorial premium.
  *
  * @returns Komponen header aplikasi.
  */
@@ -28,7 +29,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -51,21 +52,20 @@ export default function Header() {
   return (
     <>
       <header className={cn(
-        "sticky top-0 z-50 w-full bg-vanqis-base-white transition-all duration-300",
-        scrolled ? "border-b border-vanqis-base-soft" : ""
+        "sticky top-0 z-50 w-full bg-vanqis-base-white transition-shadow duration-300",
+        scrolled ? "shadow-[0_1px_10px_rgba(0,0,0,0.05)]" : ""
       )}>
-        <div className="container-app h-16 md:h-20 flex items-center justify-between gap-4 md:gap-8">
+        {/* Logo & Aksi */}
+        <div className="container-app h-14 md:h-20 flex items-center justify-between gap-4">
           
-          {/* Logo */}
+          {/* Logo Merek */}
           <Link to="/" className="flex items-center shrink-0 group">
-            <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-black tracking-tight text-vanqis-base-text uppercase leading-none">
-                Vanqis<span className="text-vanqis-fresh-carrot">Fresh</span>
-              </span>
-            </div>
+            <span className="text-lg md:text-2xl font-black tracking-tight text-vanqis-base-text uppercase leading-none">
+              Vanqis<span className="text-vanqis-fresh-carrot">Fresh</span>
+            </span>
           </Link>
 
-          {/* Pencarian */}
+          {/* Pencarian Desktop */}
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-2xl relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-vanqis-base-text/40" />
             <input
@@ -80,7 +80,7 @@ export default function Header() {
             </button>
           </form>
 
-          {/* Menu Akun */}
+          {/* Tindakan Desktop/Tablet */}
           <div className="hidden md:flex items-center gap-6 shrink-0">
             {isAuthenticated ? (
               <DropdownMenu>
@@ -140,12 +140,12 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Keranjang */}
-          <div className="flex md:hidden items-center gap-4">
-            <Link to="/cart" className="relative p-2">
-              <ShoppingCart className="w-5 h-5 text-vanqis-base-text" strokeWidth={1.5} />
+          {/* Tindakan Kanan Seluler */}
+          <div className="flex md:hidden items-center">
+            <Link to="/cart" className="relative p-2 outline-none active:scale-90 transition-transform">
+              <ShoppingCart className="w-5.5 h-5.5 text-vanqis-base-text" strokeWidth={1.5} />
               {totalItems > 0 && (
-                <span className="absolute top-0 right-0 w-4 h-4 bg-vanqis-fresh-carrot text-vanqis-base-white text-[9px] font-bold flex items-center justify-center rounded-full">
+                <span className="absolute top-1 right-0.5 w-4 h-4 bg-vanqis-fresh-carrot text-vanqis-base-white text-[9px] font-black flex items-center justify-center rounded-none shadow-sm">
                   {totalItems > 9 ? '9+' : totalItems}
                 </span>
               )}
@@ -154,22 +154,24 @@ export default function Header() {
 
         </div>
 
-        {/* Pencarian Mobile */}
-        <div className="md:hidden border-t border-vanqis-base-soft bg-vanqis-base-white">
-          <form onSubmit={handleSearch} className="flex relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-vanqis-base-text/40" />
+        {/* Pencarian Seluler */}
+        <div className="md:hidden px-4 pb-3 bg-vanqis-base-white">
+          <form onSubmit={handleSearch} className="relative flex items-center">
+            <div className="absolute left-3 flex items-center pointer-events-none">
+              <Search className="w-4 h-4 text-vanqis-base-text/30" />
+            </div>
             <input
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Cari produk segar..."
-              className="w-full h-12 pl-12 pr-4 bg-transparent border-none text-vanqis-base-text placeholder:text-vanqis-base-text/40 focus:outline-none text-sm"
+              placeholder="Cari produk segar hari ini..."
+              className="w-full h-10 pl-9 pr-4 bg-vanqis-base-soft/40 border-none text-vanqis-base-text placeholder:text-vanqis-base-text/30 focus:outline-none text-sm font-medium transition-all"
             />
           </form>
         </div>
       </header>
 
-      {/* Navigasi */}
+      {/* Navigasi Bawah */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-vanqis-base-white border-t border-vanqis-base-soft flex items-center justify-between px-6 py-3 pb-safe">
         <Link to="/" className={cn(
           "flex flex-col items-center gap-1 transition-colors",
