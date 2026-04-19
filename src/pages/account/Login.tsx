@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -28,8 +28,21 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const login = useAuthStore((state) => state.login);
   const [isLoading, setIsLoading] = useState(false);
+  const redirectTo = (() => {
+    const redirect = searchParams.get("redirect");
+    if (!redirect) {
+      return "/";
+    }
+
+    if (!redirect.startsWith("/") || redirect.startsWith("//")) {
+      return "/";
+    }
+
+    return redirect;
+  })();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -47,7 +60,7 @@ const Login = () => {
       
       await login(access, refresh);
       toast.success("Login berhasil!");
-      navigate("/");
+      navigate(redirectTo, { replace: true });
     } catch (error: any) {
       const message = error.response?.data?.detail || "Username atau password salah";
       toast.error(message);
