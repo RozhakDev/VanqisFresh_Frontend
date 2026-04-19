@@ -17,6 +17,11 @@ import {
 
 import type { OrderDetail, PaymentMethod } from "@/types";
 
+/**
+ * Menangani pengunggahan bukti pembayaran dan pilihan metode bayar.
+ *
+ * @returns Halaman unggah bukti pembayaran.
+ */
 const PaymentUpload = () => {
   const { publicId } = useParams();
   const navigate = useNavigate();
@@ -42,6 +47,11 @@ const PaymentUpload = () => {
     }
   });
 
+  /**
+   * Memvalidasi file bukti pembayaran lalu menyiapkan pratinjau gambar.
+   *
+   * @param e - Peristiwa perubahan input file.
+   */
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
@@ -63,11 +73,17 @@ const PaymentUpload = () => {
     }
   };
 
+  /**
+   * Menghapus file dan pratinjau yang sedang dipilih.
+   */
   const removeFile = () => {
     setFile(null);
     setPreview(null);
   };
 
+  /**
+   * Mengunggah bukti pembayaran ke server untuk pesanan aktif.
+   */
   const handleUpload = async () => {
     if (!file) {
       toast.error("Silakan pilih file terlebih dahulu");
@@ -94,6 +110,11 @@ const PaymentUpload = () => {
     }
   };
 
+  /**
+   * Menyalin teks ke clipboard perangkat pengguna.
+   *
+   * @param text - Teks yang akan disalin.
+   */
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.success("Nomor berhasil disalin!");
@@ -123,6 +144,7 @@ const PaymentUpload = () => {
   return (
     <>
       <div className="container-app py-8 md:py-12 max-w-5xl mx-auto relative">
+        {/* Navigasi */}
         <button 
           className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-base-text transition-colors mb-10 outline-none"
           onClick={() => navigate(`/order/${publicId}`)}
@@ -133,6 +155,7 @@ const PaymentUpload = () => {
 
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
           
+          {/* Metode Bayar */}
           <div className="lg:col-span-6 flex flex-col gap-10">
             <div>
               <h1 className="text-3xl font-black uppercase tracking-tight text-vanqis-base-text leading-none mb-2">
@@ -207,6 +230,7 @@ const PaymentUpload = () => {
             </div>
           </div>
 
+          {/* Bukti Transfer */}
           <div className="lg:col-span-6 lg:border-l border-vanqis-base-soft lg:pl-16">
             <div className="sticky top-24 space-y-8">
               <div>
@@ -291,6 +315,7 @@ const PaymentUpload = () => {
         </div>
       </div>
 
+      {/* Modal QRIS */}
       {expandedQris && (
         <div 
           className="fixed inset-0 z-[100] bg-vanqis-base-white/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8 animate-in fade-in duration-200"

@@ -9,9 +9,20 @@ interface Props {
   product: Product;
 }
 
+/**
+ * Menampilkan kartu produk dengan aksi cepat tambah ke keranjang.
+ *
+ * @param product - Data produk yang akan dirender.
+ * @returns Kartu produk yang dapat diklik.
+ */
 export default function ProductCard({ product }: Props) {
   const addItem = useCart(s => s.addItem);
 
+  /**
+   * Menangani aksi tambah produk tanpa membuka halaman detail.
+   *
+   * @param e - Event klik pada tombol aksi cepat.
+   */
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -27,6 +38,7 @@ export default function ProductCard({ product }: Props) {
       to={`/product/${product.id}`}
       className="group flex flex-col bg-vanqis-base-white border border-vanqis-base-soft hover:border-vanqis-base-text transition-colors duration-300 relative h-full"
     >
+      {/* Gambar */}
       <div className="aspect-[4/3] bg-vanqis-base-soft/50 relative overflow-hidden flex items-center justify-center border-b border-vanqis-base-soft p-4">
         {product.image ? (
           <img
@@ -52,6 +64,7 @@ export default function ProductCard({ product }: Props) {
         )}
       </div>
 
+      {/* Detail */}
       <div className="p-4 sm:p-5 flex flex-col flex-1">
         <h3 className="font-bold text-sm leading-tight line-clamp-2 mb-4 group-hover:text-vanqis-fresh-carrot transition-colors text-vanqis-base-text">
           {product.name}

@@ -8,6 +8,11 @@ import { toast } from 'sonner';
 import { DetailSkeleton } from '@/components/shared/LoadingSkeleton';
 import { ArrowLeft, Minus, Plus, ShoppingCart, Package, AlertCircle } from 'lucide-react';
 
+/**
+ * Merender halaman detail produk dan aksi tambah ke keranjang.
+ *
+ * @returns Halaman detail produk.
+ */
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -40,6 +45,9 @@ export default function ProductDetail() {
     );
   }
 
+  /**
+   * Menambahkan produk terpilih ke keranjang beserta kuantitas aktif.
+   */
   const handleAdd = () => {
     addItem(product, qty);
     toast.success('Ditambahkan ke keranjang', {
@@ -49,6 +57,7 @@ export default function ProductDetail() {
 
   return (
     <div className="container-app py-8 md:py-12">
+      {/* Navigasi */}
       <Link 
         to="/" 
         className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-base-text transition-colors mb-8 sm:mb-12 outline-none"
@@ -59,6 +68,7 @@ export default function ProductDetail() {
 
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
         
+        {/* Gambar Produk */}
         <div className="lg:col-span-7">
           <div className="aspect-[4/3] sm:aspect-square bg-vanqis-base-soft/30 border border-vanqis-base-soft relative overflow-hidden flex items-center justify-center p-8 group">
             {product.image ? (
@@ -85,6 +95,7 @@ export default function ProductDetail() {
           </div>
         </div>
 
+        {/* Detail Produk */}
         <div className="lg:col-span-5 flex flex-col pt-2 lg:pt-8">
           
           <div className="mb-8">
@@ -104,6 +115,7 @@ export default function ProductDetail() {
             </p>
           </div>
 
+          {/* Aksi */}
           <div className="mt-auto pt-8 border-t border-vanqis-base-soft">
             <div className="flex flex-col gap-6">
               

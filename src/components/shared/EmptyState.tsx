@@ -7,6 +7,14 @@ interface Props {
   showAction?: boolean;
 }
 
+/**
+ * Menampilkan keadaan kosong yang tetap informatif dan terarah.
+ *
+ * @param title - Judul keadaan kosong.
+ * @param description - Penjelasan singkat untuk pengguna.
+ * @param showAction - Menentukan apakah tombol aksi ditampilkan.
+ * @returns Komponen keadaan kosong.
+ */
 export default function EmptyState({ title, description, showAction = true }: Props) {
   return (
     <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-vanqis-base-soft bg-vanqis-base-white/50">

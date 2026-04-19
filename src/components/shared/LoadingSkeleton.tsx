@@ -1,3 +1,9 @@
+/**
+ * Menampilkan placeholder grid untuk daftar produk saat data dimuat.
+ *
+ * @param count - Jumlah kartu skeleton yang ditampilkan.
+ * @returns Grid skeleton produk.
+ */
 export function ProductGridSkeleton({ count = 8 }: { count?: number }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -14,6 +20,11 @@ export function ProductGridSkeleton({ count = 8 }: { count?: number }) {
   );
 }
 
+/**
+ * Menampilkan placeholder detail produk saat permintaan masih berjalan.
+ *
+ * @returns Skeleton untuk halaman detail.
+ */
 export function DetailSkeleton() {
   return (
     <div className="container-app py-8 animate-pulse">

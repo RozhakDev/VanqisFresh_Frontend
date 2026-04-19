@@ -22,6 +22,11 @@ import OrderHistory from "./pages/orders/OrderHistory";
 
 const queryClient = new QueryClient();
 
+/**
+ * Merender kerangka aplikasi utama beserta router, provider, dan layout global.
+ *
+ * @returns Struktur aplikasi tingkat atas.
+ */
 const App = () => {
   const fetchProfile = useAuthStore((state) => state.fetchProfile);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -36,6 +41,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        {/* Notifikasi */}
         <Sonner 
           toastOptions={{
             style: {
@@ -49,9 +55,12 @@ const App = () => {
             className: 'font-bold uppercase tracking-widest text-xs',
           }}
         />
+        {/* Router Aplikasi */}
         <BrowserRouter>
           <div className="min-h-screen flex flex-col bg-vanqis-base-layout">
+            {/* Header */}
             <Header />
+            {/* Konten Utama */}
             <main className="flex-1 pb-20 sm:pb-0">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -67,6 +76,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
+            {/* Footer */}
             <Footer />
           </div>
         </BrowserRouter>

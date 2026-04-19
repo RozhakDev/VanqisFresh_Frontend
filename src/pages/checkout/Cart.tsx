@@ -4,12 +4,18 @@ import { formatPrice } from '@/lib/utils';
 import { Minus, Plus, Trash2, Package, ArrowRight } from 'lucide-react';
 import EmptyState from '@/components/shared/EmptyState';
 
+/**
+ * Menampilkan isi keranjang dan ringkasan total pembelian.
+ *
+ * @returns Halaman keranjang.
+ */
 export default function CartPage() {
   const { items, updateQuantity, removeItem, totalPrice } = useCart();
 
   if (items.length === 0) {
     return (
       <div className="container-app py-8 md:py-12 max-w-4xl mx-auto">
+        {/* Judul Halaman */}
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text mb-10 pb-6 border-b border-vanqis-base-soft">
           Keranjang Saya
         </h1>
@@ -20,6 +26,7 @@ export default function CartPage() {
 
   return (
     <div className="container-app py-8 md:py-12 max-w-6xl mx-auto">
+      {/* Ringkasan Atas */}
       <div className="flex items-center justify-between mb-8 pb-6 border-b border-vanqis-base-soft">
         <div>
           <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none">
@@ -39,6 +46,7 @@ export default function CartPage() {
 
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
         
+        {/* Item Keranjang */}
         <div className="lg:col-span-8 flex flex-col gap-6">
           {items.map(({ product, quantity }) => (
             <div key={product.id} className="bg-vanqis-base-white border border-vanqis-base-soft flex flex-col sm:flex-row gap-0 sm:gap-6 group relative">
@@ -107,6 +115,7 @@ export default function CartPage() {
             </div>
           ))}
           
+          {/* Navigasi Katalog */}
           <div className="sm:hidden mt-4">
             <Link 
               to="/" 
@@ -117,6 +126,7 @@ export default function CartPage() {
           </div>
         </div>
 
+        {/* Ringkasan Pesanan */}
         <div className="lg:col-span-4">
           <div className="bg-vanqis-base-white border border-vanqis-base-text p-8 sticky top-24">
             <h2 className="text-xl font-black uppercase tracking-tight text-vanqis-base-text mb-8 pb-4 border-b border-vanqis-base-soft">

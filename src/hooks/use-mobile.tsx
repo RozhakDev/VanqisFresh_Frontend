@@ -2,6 +2,11 @@ import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
 
+/**
+ * Menentukan apakah viewport saat ini berada pada ukuran mobile.
+ *
+ * @returns `true` bila lebar layar berada di bawah breakpoint mobile.
+ */
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 

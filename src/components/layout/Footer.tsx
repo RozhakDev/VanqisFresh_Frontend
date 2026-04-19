@@ -3,6 +3,11 @@ import { useEffect, useState } from 'react';
 import { getStoreContacts } from '@/lib/api';
 import type { StoreContact } from '@/types';
 
+/**
+ * Menyajikan informasi toko, tautan penting, dan kontak resmi.
+ *
+ * @returns Komponen footer aplikasi.
+ */
 export default function Footer() {
   const [contacts, setContacts] = useState<StoreContact[]>([]);
 
@@ -21,6 +26,7 @@ export default function Footer() {
       <div className="container-app py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           
+          {/* Identitas */}
           <div className="lg:col-span-4 space-y-6">
             <Link to="/" className="flex flex-col">
               <span className="text-2xl font-black tracking-tight text-vanqis-base-text uppercase leading-none">
@@ -47,6 +53,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Tautan */}
           <div className="lg:col-span-2 lg:col-start-7 space-y-6">
             <h4 className="text-vanqis-base-text font-black text-xs uppercase tracking-widest">Belanja</h4>
             <ul className="space-y-3 text-sm">
@@ -56,6 +63,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Bantuan */}
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-vanqis-base-text font-black text-xs uppercase tracking-widest">Bantuan</h4>
             <ul className="space-y-3 text-sm">
@@ -64,6 +72,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Lokasi */}
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-vanqis-base-text font-black text-xs uppercase tracking-widest">Lokasi</h4>
             <ul className="space-y-3 text-sm text-vanqis-base-text/70 leading-relaxed">

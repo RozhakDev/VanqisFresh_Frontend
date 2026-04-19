@@ -8,13 +8,25 @@ interface Props {
   promos: Promo[];
 }
 
+/**
+ * Menampilkan banner promo bergulir dengan kontrol navigasi.
+ *
+ * @param promos - Daftar promo yang akan ditampilkan.
+ * @returns Banner promosi atau `null` bila tidak ada data.
+ */
 export default function PromoBanner({ promos }: Props) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
+  /**
+   * Menggeser slider ke item promo sebelumnya.
+   */
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
 
+  /**
+   * Menggeser slider ke item promo berikutnya.
+   */
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
@@ -40,6 +52,7 @@ export default function PromoBanner({ promos }: Props) {
 
   return (
     <div className="relative group w-full mb-8">
+      {/* Slider Promo */}
       <div className="overflow-hidden border border-vanqis-base-soft" ref={emblaRef}>
         <div className="flex">
           {promos.map((promo, index) => {
@@ -76,6 +89,7 @@ export default function PromoBanner({ promos }: Props) {
 
       {promos.length > 1 && (
         <>
+          {/* Navigasi */}
           <button
             className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-vanqis-base-white/10 backdrop-blur-md border border-vanqis-base-white/20 text-vanqis-base-white hover:bg-vanqis-base-white hover:text-vanqis-base-text transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
             onClick={scrollPrev}

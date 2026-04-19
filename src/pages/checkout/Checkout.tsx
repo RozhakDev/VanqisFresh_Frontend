@@ -8,6 +8,11 @@ import { toast } from 'sonner';
 import EmptyState from '@/components/shared/EmptyState';
 import { Loader2, MapPin, User, Phone, Edit2, ArrowRight } from 'lucide-react';
 
+/**
+ * Menyusun langkah akhir checkout sebelum pesanan dibuat.
+ *
+ * @returns Halaman checkout.
+ */
 export default function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
@@ -42,6 +47,9 @@ export default function Checkout() {
     );
   }
 
+  /**
+   * Mengirim data checkout ke server untuk membuat pesanan baru.
+   */
   const handleCheckout = async () => {
     setLoading(true);
     try {
@@ -55,7 +63,6 @@ export default function Checkout() {
       
       toast.success("Pesanan berhasil dibuat!");
       clearCart();
-      // Redirect ke halaman upload bukti bayar di mana info bank juga ditampilkan
       navigate(`/payment/${order.public_id}`);
     } catch (err: any) {
       const message = err.response?.data?.items?.[0]?.product_id?.[0] || 'Gagal membuat pesanan';
@@ -67,6 +74,7 @@ export default function Checkout() {
 
   return (
     <div className="container-app py-8 md:py-12 max-w-6xl mx-auto">
+      {/* Ringkasan Atas */}
       <div className="mb-10 pb-6 border-b border-vanqis-base-soft">
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none">
           Penyelesaian Pesanan
@@ -78,6 +86,7 @@ export default function Checkout() {
 
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
         
+        {/* Detail Pengiriman */}
         <div className="lg:col-span-7 space-y-10">
           
           <section>
@@ -125,6 +134,7 @@ export default function Checkout() {
 
         </div>
 
+        {/* Ringkasan Pesanan */}
         <div className="lg:col-span-5">
           <div className="bg-vanqis-base-white border border-vanqis-base-text p-8 sticky top-24">
             <h2 className="text-xl font-black uppercase tracking-tight text-vanqis-base-text mb-8 pb-4 border-b border-vanqis-base-soft">

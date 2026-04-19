@@ -30,6 +30,11 @@ const profileSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
+/**
+ * Menampilkan formulir profil pengguna untuk pembaruan data diri.
+ *
+ * @returns Halaman profil.
+ */
 export default function Profile() {
   const navigate = useNavigate();
   const { user, fetchProfile } = useAuthStore();
@@ -58,6 +63,11 @@ export default function Profile() {
     }
   }, [user, form]);
 
+  /**
+   * Mengirim perubahan profil ke server lalu memuat ulang data pengguna.
+   *
+   * @param values - Data profil yang telah divalidasi.
+   */
   const onSubmit = async (values: ProfileFormValues) => {
     setIsLoading(true);
     try {
@@ -79,8 +89,9 @@ export default function Profile() {
       setIsLoading(false);
     }
   };
-return (
-  <div className="container-app py-8 max-w-3xl mx-auto px-4">
+  return (
+    <div className="container-app py-8 max-w-3xl mx-auto px-4">
+    {/* Navigasi */}
     <button 
       className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors mb-8 outline-none"
       onClick={() => navigate("/")}
@@ -89,8 +100,9 @@ return (
       Kembali ke Beranda
     </button>
 
+    {/* Form Profil */}
     <div className="bg-vanqis-base-white border border-vanqis-base-soft p-8 md:p-12 relative overflow-hidden shadow-vanqis-base-text/5">
-      {/* Decorative corner element */}
+      {/* Elemen Dekoratif */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-vanqis-base-soft/20 rounded-bl-[100px] -z-10" />
         
         <div className="flex items-center gap-6 mb-10 pb-8 border-b border-vanqis-base-soft">

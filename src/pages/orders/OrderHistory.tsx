@@ -16,6 +16,12 @@ import {
 } from "lucide-react";
 import { OrderHistoryItem, OrderStatus } from "@/types";
 
+/**
+ * Menghasilkan gaya visual dan ikon yang sesuai untuk setiap status pesanan.
+ *
+ * @param status - Status pesanan yang akan dipetakan.
+ * @returns Konfigurasi warna dan ikon status.
+ */
 const getStatusConfig = (status: OrderStatus) => {
   switch (status) {
     case 'Pending':
@@ -35,6 +41,11 @@ const getStatusConfig = (status: OrderStatus) => {
   }
 };
 
+/**
+ * Menampilkan daftar riwayat pesanan milik pengguna.
+ *
+ * @returns Halaman riwayat pesanan.
+ */
 const Orders = () => {
   const navigate = useNavigate();
 
@@ -58,6 +69,7 @@ const Orders = () => {
 
   return (
     <div className="container-app py-8 md:py-12 max-w-5xl mx-auto">
+      {/* Ringkasan Atas */}
       <div className="mb-10 pb-6 border-b border-vanqis-base-soft">
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none">
           Riwayat Pesanan
@@ -68,25 +80,30 @@ const Orders = () => {
       </div>
 
       {orders.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-vanqis-base-soft bg-vanqis-base-white/50">
-          <div className="w-20 h-20 bg-vanqis-base-soft flex items-center justify-center mb-8">
-            <ShoppingBag className="w-8 h-8 text-vanqis-base-text/40" strokeWidth={1} />
+        <>
+          {/* Keadaan Kosong */}
+          <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-vanqis-base-soft bg-vanqis-base-white/50">
+            <div className="w-20 h-20 bg-vanqis-base-soft flex items-center justify-center mb-8">
+              <ShoppingBag className="w-8 h-8 text-vanqis-base-text/40" strokeWidth={1} />
+            </div>
+            <h3 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-3">
+              Belum Ada Pesanan
+            </h3>
+            <p className="text-sm font-medium text-vanqis-base-text/60 mb-8 max-w-sm leading-relaxed">
+              Sepertinya Anda belum pernah melakukan pemesanan buah atau sayur.
+            </p>
+            <button
+              onClick={() => navigate("/")}
+              className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors outline-none"
+            >
+              Mulai Belanja
+            </button>
           </div>
-          <h3 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-3">
-            Belum Ada Pesanan
-          </h3>
-          <p className="text-sm font-medium text-vanqis-base-text/60 mb-8 max-w-sm leading-relaxed">
-            Sepertinya Anda belum pernah melakukan pemesanan buah atau sayur.
-          </p>
-          <button
-            onClick={() => navigate("/")}
-            className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors outline-none"
-          >
-            Mulai Belanja
-          </button>
-        </div>
+        </>
       ) : (
-        <div className="flex flex-col gap-6">
+        <>
+          {/* Daftar Pesanan */}
+          <div className="flex flex-col gap-6">
           {orders.map((order) => {
             const statusConfig = getStatusConfig(order.status);
             const StatusIcon = statusConfig.icon;
@@ -139,7 +156,8 @@ const Orders = () => {
               </div>
             );
           })}
-        </div>
+          </div>
+        </>
       )}
     </div>
   );

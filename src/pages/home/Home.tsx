@@ -9,6 +9,11 @@ import { ProductGridSkeleton } from '@/components/shared/LoadingSkeleton';
 import EmptyState from '@/components/shared/EmptyState';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+/**
+ * Merender halaman katalog utama dan mengelola pemuatan data produk.
+ *
+ * @returns Halaman beranda katalog.
+ */
 export default function Index() {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
@@ -22,6 +27,9 @@ export default function Index() {
   const [totalPages, setTotalPages] = useState(1);
   const [ordering, setOrdering] = useState<string>('-created_at');
 
+  /**
+   * Mengambil daftar produk sesuai filter, urutan, dan halaman aktif.
+   */
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
@@ -57,8 +65,10 @@ export default function Index() {
 
   return (
     <div className="container-app py-6 space-y-6">
+      {/* Promo Banner */}
       {!searchQuery && <PromoBanner promos={promos} />}
 
+      {/* Filter Utama */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pb-6 border-b border-vanqis-base-soft">
         <div>
           <h1 className="text-2xl font-black uppercase tracking-tight text-vanqis-base-text">
@@ -83,12 +93,14 @@ export default function Index() {
         </div>
       </div>
 
+      {/* Filter Kategori */}
       <CategoryFilter
         categories={categories}
         selected={selectedCategory}
         onSelect={setSelectedCategory}
       />
 
+      {/* Daftar Produk */}
       {loading ? (
         <ProductGridSkeleton />
       ) : products.length === 0 ? (

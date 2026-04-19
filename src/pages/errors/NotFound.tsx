@@ -2,6 +2,11 @@ import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 
+/**
+ * Menampilkan halaman kesalahan ketika rute yang diminta tidak ditemukan.
+ *
+ * @returns Halaman 404.
+ */
 const NotFound = () => {
   const location = useLocation();
 
@@ -11,6 +16,7 @@ const NotFound = () => {
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center bg-vanqis-base-layout p-4">
+      {/* Kartu Error */}
       <div className="w-full max-w-2xl bg-vanqis-base-white border-2 border-vanqis-base-text p-12 md:p-20 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-32 h-32 border-r-2 border-b-2 border-vanqis-base-soft/50 -translate-x-16 -translate-y-16" />
         <div className="absolute bottom-0 right-0 w-32 h-32 border-l-2 border-t-2 border-vanqis-base-soft/50 translate-x-16 translate-y-16" />
@@ -27,6 +33,7 @@ const NotFound = () => {
           Maaf, halaman yang Anda tuju mungkin telah dipindahkan, dihapus, atau tidak pernah ada. Mari kembali ke jalan yang benar.
         </p>
         
+        {/* Aksi */}
         <Link 
           to="/" 
           className="inline-flex items-center justify-center h-14 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-fresh-carrot transition-colors outline-none group"

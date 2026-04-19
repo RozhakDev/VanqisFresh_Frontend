@@ -19,6 +19,12 @@ import {
 } from "lucide-react";
 import { OrderDetail, OrderStatus } from "@/types";
 
+/**
+ * Menghasilkan gaya status untuk detail pesanan berdasarkan status terkini.
+ *
+ * @param status - Status pesanan yang sedang ditampilkan.
+ * @returns Konfigurasi tampilan status.
+ */
 const getStatusConfig = (status: OrderStatus) => {
   switch (status) {
     case 'Pending':
@@ -38,6 +44,11 @@ const getStatusConfig = (status: OrderStatus) => {
   }
 };
 
+/**
+ * Menampilkan informasi detail satu pesanan beserta status pembayarannya.
+ *
+ * @returns Halaman detail pesanan.
+ */
 const OrderStatusPage = () => {
   const { publicId } = useParams();
   const navigate = useNavigate();
@@ -81,6 +92,7 @@ const OrderStatusPage = () => {
 
   return (
     <div className="container-app py-8 md:py-12 max-w-5xl mx-auto relative">
+      {/* Navigasi */}
       <button 
         className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-base-text transition-colors mb-10 outline-none"
         onClick={() => navigate("/orders")}
@@ -89,6 +101,7 @@ const OrderStatusPage = () => {
         Kembali ke Riwayat
       </button>
 
+      {/* Ringkasan Atas */}
       <div className="mb-10 pb-6 border-b border-vanqis-base-soft flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <div>
           <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none mb-2">
@@ -108,6 +121,7 @@ const OrderStatusPage = () => {
 
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
         
+        {/* Rincian Pesanan */}
         <div className="lg:col-span-7 space-y-10">
           
           <section>
@@ -178,6 +192,7 @@ const OrderStatusPage = () => {
 
         </div>
 
+        {/* Informasi Pengiriman */}
         <div className="lg:col-span-5 space-y-10">
           
           <section>

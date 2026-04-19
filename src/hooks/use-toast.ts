@@ -21,6 +21,11 @@ const actionTypes = {
 
 let count = 0;
 
+/**
+ * Membuat ID unik berurutan untuk setiap toast.
+ *
+ * @returns ID toast dalam bentuk string.
+ */
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
@@ -52,6 +57,11 @@ interface State {
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
+/**
+ * Menjadwalkan penghapusan toast setelah jeda yang ditentukan.
+ *
+ * @param toastId - ID toast yang akan dihapus dari antrean.
+ */
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
     return;
@@ -68,6 +78,13 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
+/**
+ * Mengelola transisi state toast berdasarkan aksi yang diterima.
+ *
+ * @param state - State toast saat ini.
+ * @param action - Aksi yang mengubah state toast.
+ * @returns State toast yang sudah diperbarui.
+ */
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -85,8 +102,6 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action;
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
@@ -125,6 +140,11 @@ const listeners: Array<(state: State) => void> = [];
 
 let memoryState: State = { toasts: [] };
 
+/**
+ * Mengirim aksi toast ke reducer dan menyebarkan hasilnya ke listener.
+ *
+ * @param action - Aksi yang akan diproses.
+ */
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
   listeners.forEach((listener) => {
@@ -134,6 +154,12 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
+/**
+ * Menambahkan toast baru ke antrean notifikasi aplikasi.
+ *
+ * @param props - Konfigurasi toast tanpa ID internal.
+ * @returns Objek kontrol untuk menutup atau memperbarui toast.
+ */
 function toast({ ...props }: Toast) {
   const id = genId();
 
@@ -163,6 +189,11 @@ function toast({ ...props }: Toast) {
   };
 }
 
+/**
+ * Menyediakan state toast reaktif untuk komponen React.
+ *
+ * @returns State toast beserta helper untuk membuat dan menutup toast.
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 

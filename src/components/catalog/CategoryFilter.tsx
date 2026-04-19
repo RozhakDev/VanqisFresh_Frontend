@@ -7,9 +7,18 @@ interface Props {
   onSelect: (id: number | null) => void;
 }
 
+/**
+ * Menampilkan daftar filter kategori untuk menyaring katalog produk.
+ *
+ * @param categories - Daftar kategori yang tersedia.
+ * @param selected - ID kategori yang sedang aktif.
+ * @param onSelect - Callback saat kategori dipilih.
+ * @returns Deretan tombol filter kategori.
+ */
 export default function CategoryFilter({ categories, selected, onSelect }: Props) {
   return (
     <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-none border-b border-vanqis-base-soft">
+      {/* Semua */}
       <button
         onClick={() => onSelect(null)}
         className={cn(
@@ -24,6 +33,7 @@ export default function CategoryFilter({ categories, selected, onSelect }: Props
           <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-fresh-carrot" />
         )}
       </button>
+      {/* Kategori */}
       {categories.map(cat => (
         <button
           key={cat.id}

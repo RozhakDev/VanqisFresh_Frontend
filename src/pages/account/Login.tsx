@@ -26,6 +26,11 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
+/**
+ * Menyajikan formulir masuk dengan validasi dan pengalihan aman.
+ *
+ * @returns Halaman login.
+ */
 const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -52,6 +57,11 @@ const Login = () => {
     },
   });
 
+  /**
+   * Mengirim kredensial pengguna untuk proses autentikasi.
+   *
+   * @param values - Data login dari formulir.
+   */
   const onSubmit = async (values: LoginFormValues) => {
     setIsLoading(true);
     try {
@@ -71,6 +81,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-vanqis-base-layout py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Tombol Kembali */}
       <button 
         className="absolute top-8 left-6 sm:left-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors outline-none"
         onClick={() => navigate("/")}
@@ -79,6 +90,7 @@ const Login = () => {
         Kembali
       </button>
 
+      {/* Form Login */}
       <div className="w-full max-w-[440px] bg-vanqis-base-white p-8 sm:p-12 border border-vanqis-base-soft shadow-vanqis-base-text/5 relative">
         <div className="flex flex-col items-center text-center mb-10">
           <h1 className="text-2xl font-black uppercase tracking-tight text-vanqis-base-text mb-2">

@@ -9,6 +9,9 @@ const api = axios.create({
   },
 });
 
+/**
+ * Menyisipkan token akses ke setiap permintaan yang terautentikasi.
+ */
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("auth-token");
@@ -20,6 +23,9 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+/**
+ * Menangani pembaruan token ketika server mengembalikan status tidak sah.
+ */
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -51,26 +57,45 @@ api.interceptors.response.use(
   }
 );
 
+/**
+ * Mengambil daftar kategori produk dari API katalog.
+ */
 export const getCategories = async () => {
   const response = await api.get("/catalog/categories/");
   return response.data;
 };
 
+/**
+ * Mengambil daftar produk dengan parameter penyaring opsional.
+ *
+ * @param params - Parameter kueri untuk pencarian, filter, dan urutan.
+ */
 export const getProducts = async (params?: any) => {
   const response = await api.get("/catalog/products/", { params });
   return response.data;
 };
 
+/**
+ * Mengambil detail satu produk berdasarkan ID.
+ *
+ * @param id - ID produk yang ingin dimuat.
+ */
 export const getProduct = async (id: number | string) => {
   const response = await api.get(`/catalog/products/${id}/`);
   return response.data;
 };
 
+/**
+ * Mengambil daftar promo aktif yang ditampilkan di beranda.
+ */
 export const getPromos = async () => {
   const response = await api.get("/catalog/promos/");
   return response.data;
 };
 
+/**
+ * Mengambil daftar kontak resmi toko untuk bagian footer.
+ */
 export const getStoreContacts = async () => {
   const response = await api.get("/core/contacts/");
   return response.data;

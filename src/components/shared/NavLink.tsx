@@ -8,6 +8,14 @@ interface NavLinkCompatProps extends Omit<NavLinkProps, "className"> {
   pendingClassName?: string;
 }
 
+/**
+ * Membungkus `NavLink` React Router dengan dukungan kelas aktif dan pending.
+ *
+ * @param className - Kelas dasar untuk tautan.
+ * @param activeClassName - Kelas saat tautan aktif.
+ * @param pendingClassName - Kelas saat navigasi masih berlangsung.
+ * @returns Tautan navigasi yang kompatibel dengan pola lama.
+ */
 const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
   ({ className, activeClassName, pendingClassName, to, ...props }, ref) => {
     return (

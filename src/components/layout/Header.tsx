@@ -13,6 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from '@/lib/utils';
 
+/**
+ * Menampilkan header global, pencarian, akun, dan navigasi bawah pada mobile.
+ *
+ * @returns Komponen header aplikasi.
+ */
 export default function Header() {
   const totalItems = useCart(s => s.totalItems());
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -51,6 +56,7 @@ export default function Header() {
       )}>
         <div className="container-app h-16 md:h-20 flex items-center justify-between gap-4 md:gap-8">
           
+          {/* Logo */}
           <Link to="/" className="flex items-center shrink-0 group">
             <div className="flex flex-col">
               <span className="text-xl md:text-2xl font-black tracking-tight text-vanqis-base-text uppercase leading-none">
@@ -59,6 +65,7 @@ export default function Header() {
             </div>
           </Link>
 
+          {/* Pencarian */}
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-2xl relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-vanqis-base-text/40" />
             <input
@@ -73,6 +80,7 @@ export default function Header() {
             </button>
           </form>
 
+          {/* Menu Akun */}
           <div className="hidden md:flex items-center gap-6 shrink-0">
             {isAuthenticated ? (
               <DropdownMenu>
@@ -132,6 +140,7 @@ export default function Header() {
             </Link>
           </div>
 
+          {/* Keranjang */}
           <div className="flex md:hidden items-center gap-4">
             <Link to="/cart" className="relative p-2">
               <ShoppingCart className="w-5 h-5 text-vanqis-base-text" strokeWidth={1.5} />
@@ -145,6 +154,7 @@ export default function Header() {
 
         </div>
 
+        {/* Pencarian Mobile */}
         <div className="md:hidden border-t border-vanqis-base-soft bg-vanqis-base-white">
           <form onSubmit={handleSearch} className="flex relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-vanqis-base-text/40" />
@@ -159,6 +169,7 @@ export default function Header() {
         </div>
       </header>
 
+      {/* Navigasi */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-vanqis-base-white border-t border-vanqis-base-soft flex items-center justify-between px-6 py-3 pb-safe">
         <Link to="/" className={cn(
           "flex flex-col items-center gap-1 transition-colors",
