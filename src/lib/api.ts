@@ -9,7 +9,6 @@ const api = axios.create({
   },
 });
 
-// Interceptor untuk menambahkan token ke header
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("auth-token");
@@ -21,13 +20,11 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Interceptor untuk menangani refresh token atau error 401
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
     
-    // Jika error 401 dan bukan sedang mencoba login ulang
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem("refresh-token");
@@ -44,7 +41,6 @@ api.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${access}`;
           return api(originalRequest);
         } catch (refreshError) {
-          // Jika refresh token juga gagal, logout user
           localStorage.removeItem("auth-token");
           localStorage.removeItem("refresh-token");
           window.location.href = "/login";

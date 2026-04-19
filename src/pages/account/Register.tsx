@@ -20,13 +20,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 const registerSchema = z.object({
-  username: z.string().min(3, "Username minimal 3 karakter"),
-  password: z.string().min(6, "Password minimal 6 karakter"),
-  email: z.string().email("Email tidak valid"),
-  first_name: z.string().min(1, "Nama depan wajib diisi"),
+  username: z.string().trim().min(3, "Username minimal 3 karakter"),
+  password: z.string().min(6, "Password minimal 6 karakter").refine((value) => value.trim().length > 0, "Password wajib diisi"),
+  email: z.string().trim().email("Email tidak valid"),
+  first_name: z.string().trim().min(1, "Nama depan wajib diisi"),
   last_name: z.string().optional(),
-  phone_number: z.string().min(10, "Nomor telepon minimal 10 digit").max(15, "Nomor telepon maksimal 15 digit"),
-  address: z.string().min(10, "Alamat lengkap minimal 10 karakter"),
+  phone_number: z.string().trim().regex(/^\d+$/, "Nomor telepon hanya boleh angka").min(10, "Nomor telepon minimal 10 digit").max(15, "Nomor telepon maksimal 15 digit"),
+  address: z.string().trim().min(10, "Alamat lengkap minimal 10 karakter"),
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
