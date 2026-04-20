@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '@/stores/cart';
 import { formatPrice } from '@/lib/utils';
-import { Minus, Plus, Trash2, Package, ArrowRight } from 'lucide-react';
+import { Minus, Plus, Trash2, Package, ArrowRight, ArrowLeft } from 'lucide-react';
 import EmptyState from '@/components/shared/EmptyState';
 
 /**
@@ -119,9 +119,10 @@ export default function CartPage() {
           <div className="sm:hidden mt-4">
             <Link 
               to="/" 
-              className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors"
+              className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors outline-none"
             >
-              ← Kembali Belanja
+              <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
+              Kembali Belanja
             </Link>
           </div>
         </div>

@@ -67,7 +67,6 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-vanqis-base-text font-black text-xs uppercase tracking-widest">Bantuan</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="text-vanqis-base-text/70 hover:text-vanqis-base-text transition-colors">Tanya Jawab</a></li>
               <li><a href={whatsapp?.url || '#'} className="text-vanqis-base-text/70 hover:text-vanqis-base-text transition-colors">Hubungi Kami</a></li>
             </ul>
           </div>

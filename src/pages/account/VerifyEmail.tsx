@@ -80,15 +80,19 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-vanqis-base-layout py-12 px-4 sm:px-6 lg:px-8 relative">
-      <button 
-        className="absolute top-8 left-6 sm:left-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors outline-none"
-        onClick={() => navigate("/login")}
-      >
-        <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-        Kembali ke Login
-      </button>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-vanqis-base-layout py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Tombol Kembali */}
+      <div className="w-full max-w-[440px] flex justify-start mb-6 sm:absolute sm:top-8 sm:left-12 sm:mb-0">
+        <button 
+          className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors outline-none"
+          onClick={() => navigate("/login")}
+        >
+          <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
+          Kembali ke Login
+        </button>
+      </div>
 
+      {/* Form Verifikasi */}
       <div className="w-full max-w-[440px] bg-vanqis-base-white p-8 sm:p-12 border border-vanqis-base-soft shadow-vanqis-base-text/5 relative">
         <div className="flex flex-col items-center text-center mb-10">
           <div className="w-16 h-16 bg-vanqis-accent/10 flex items-center justify-center rounded-full mb-6">
