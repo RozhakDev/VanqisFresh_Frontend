@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 const profileSchema = z.object({
-  email: z.string().trim().email("Email tidak valid").or(z.literal('')),
+  email: z.string().trim().min(1, "Email wajib diisi").email("Email tidak valid"),
   first_name: z.string().trim().min(1, "Nama depan wajib diisi"),
   last_name: z.string().optional().nullable(),
   phone_number: z.string().trim().regex(/^\d+$/, "Nomor telepon hanya boleh angka").min(10, "Nomor telepon minimal 10 digit").max(15, "Nomor telepon maksimal 15 digit"),
@@ -152,7 +152,7 @@ export default function Profile() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Email</FormLabel>
+                    <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70 mb-1 block">Email *</FormLabel>
                     <FormControl>
                       <Input type="email" placeholder="rozhak@rozhak.xyz" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                     </FormControl>

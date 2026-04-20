@@ -17,6 +17,7 @@ import NotFound from "./pages/errors/NotFound";
 import Login from "./pages/account/Login";
 import Register from "./pages/account/Register";
 import Profile from "./pages/account/Profile";
+import VerifyEmail from "./pages/account/VerifyEmail";
 
 import OrderHistory from "./pages/orders/OrderHistory";
 
@@ -66,6 +67,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/orders" element={<OrderHistory />} />
                 <Route path="/product/:id" element={<ProductDetail />} />

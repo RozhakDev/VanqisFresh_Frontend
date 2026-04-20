@@ -62,8 +62,8 @@ const Register = () => {
     setIsLoading(true);
     try {
       await api.post("/users/register/", values);
-      toast.success("Registrasi berhasil! Silakan login.");
-      navigate("/login");
+      toast.success("Registrasi berhasil! Silakan cek email Anda untuk kode OTP.");
+      navigate("/verify-email", { state: { email: values.email } });
     } catch (error: any) {
       const errors = error.response?.data;
       if (errors) {

@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username wajib diisi"),
+  email: z.string().email("Email tidak valid"),
   password: z.string().min(1, "Password wajib diisi"),
 });
 
@@ -52,7 +52,7 @@ const Login = () => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -65,15 +65,35 @@ const Login = () => {
   const onSubmit = async (values: LoginFormValues) => {
     setIsLoading(true);
     try {
-      const response = await api.post("/users/login/", values);
+      const payload = {
+        username: values.email,
+        password: values.password,
+      };
+      const response = await api.post("/users/login/", payload);
       const { access, refresh } = response.data;
       
       await login(access, refresh);
       toast.success("Login berhasil!");
       navigate(redirectTo, { replace: true });
     } catch (error: any) {
-      const message = error.response?.data?.detail || "Username atau password salah";
-      toast.error(message);
+      const responseData = error.response?.data;
+      
+      const isVerifiedError = 
+        responseData?.is_verified === false || 
+        responseData?.errors?.is_verified?.[0] === "False" ||
+        responseData?.errors?.is_verified?.[0] === false;
+
+      if (isVerifiedError) {
+        toast.error("Email Anda belum diverifikasi. Silakan verifikasi terlebih dahulu.");
+        navigate("/verify-email", { state: { email: values.email } });
+      } else {
+        const message = 
+          responseData?.errors?.detail?.[0] || 
+          responseData?.detail || 
+          responseData?.message || 
+          "Email atau password salah";
+        toast.error(message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -105,13 +125,14 @@ const Login = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Username</FormLabel>
+                  <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Email</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="Contoh: rozhak_official" 
+                      type="email"
+                      placeholder="Contoh: rozhak@rozhak.xyz" 
                       className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" 
                       {...field} 
                     />
