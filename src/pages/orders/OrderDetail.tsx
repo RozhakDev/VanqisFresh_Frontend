@@ -30,13 +30,13 @@ const getStatusConfig = (status: OrderStatus) => {
     case 'Pending':
       return { color: 'text-vanqis-fresh-tomato border-vanqis-fresh-tomato bg-vanqis-fresh-tomato/5' };
     case 'Confirmed':
-      return { color: 'text-vanqis-fresh-carrot border-vanqis-fresh-carrot bg-vanqis-fresh-carrot/5' };
+      return { color: 'text-vanqis-accent border-vanqis-accent bg-vanqis-accent/5' };
     case 'Preparing':
       return { color: 'text-vanqis-fresh-grape border-vanqis-fresh-grape bg-vanqis-fresh-grape/5' };
     case 'Processing':
       return { color: 'text-vanqis-fresh-banana border-vanqis-fresh-banana bg-vanqis-fresh-banana/5' };
     case 'Shipping':
-      return { color: 'text-vanqis-fresh-carrot border-vanqis-fresh-carrot bg-vanqis-fresh-carrot/5' };
+      return { color: 'text-vanqis-accent border-vanqis-accent bg-vanqis-accent/5' };
     case 'Completed':
       return { color: 'text-vanqis-core-green border-vanqis-core-green bg-vanqis-core-green/5' };
     default:
@@ -80,7 +80,7 @@ const OrderStatusPage = () => {
         <p className="text-sm font-medium text-vanqis-base-text/60 mb-8 max-w-sm leading-relaxed">Maaf, kami tidak dapat menemukan informasi untuk pesanan ini.</p>
         <button 
           onClick={() => navigate("/orders")}
-          className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors outline-none"
+          className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-accent transition-colors outline-none"
         >
           Kembali ke Riwayat
         </button>
@@ -151,8 +151,8 @@ const OrderStatusPage = () => {
 
           {order.status === 'Pending' && order.payment_proof === 'Belum diunggah' && (
             <section>
-               <div className="border-2 border-dashed border-vanqis-fresh-carrot bg-vanqis-fresh-carrot/5 p-8 text-center flex flex-col items-center">
-                <div className="w-12 h-12 bg-vanqis-fresh-carrot text-vanqis-base-white flex items-center justify-center mb-4">
+               <div className="border-2 border-dashed border-vanqis-accent bg-vanqis-accent/5 p-8 text-center flex flex-col items-center">
+                <div className="w-12 h-12 bg-vanqis-accent text-vanqis-base-white flex items-center justify-center mb-4">
                   <ImageIcon className="w-6 h-6" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-black text-lg uppercase tracking-tight text-vanqis-base-text mb-2">
@@ -163,7 +163,7 @@ const OrderStatusPage = () => {
                 </p>
                 <button 
                   onClick={() => navigate(`/payment/${order.public_id}`)}
-                  className="flex items-center justify-center h-12 px-8 bg-vanqis-fresh-carrot text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-base-text transition-colors outline-none"
+                  className="flex items-center justify-center h-12 px-8 bg-vanqis-accent text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-base-text transition-colors outline-none"
                 >
                   Unggah Bukti Sekarang
                 </button>

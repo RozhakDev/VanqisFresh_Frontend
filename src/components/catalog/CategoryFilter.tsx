@@ -30,7 +30,7 @@ export default function CategoryFilter({ categories, selected, onSelect }: Props
       >
         All
         {selected === null && (
-          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-fresh-carrot" />
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-accent" />
         )}
       </button>
       {/* Kategori */}
@@ -47,7 +47,7 @@ export default function CategoryFilter({ categories, selected, onSelect }: Props
         >
           {cat.name}
           {selected === cat.id && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-fresh-carrot" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-vanqis-accent" />
           )}
         </button>
       ))}

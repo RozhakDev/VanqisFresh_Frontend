@@ -66,7 +66,7 @@ export default function ProductCard({ product }: Props) {
 
       {/* Detail */}
       <div className="p-4 sm:p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-sm leading-tight line-clamp-2 mb-4 group-hover:text-vanqis-fresh-carrot transition-colors text-vanqis-base-text">
+        <h3 className="font-bold text-sm leading-tight line-clamp-2 mb-4 group-hover:text-vanqis-accent transition-colors text-vanqis-base-text">
           {product.name}
         </h3>
         

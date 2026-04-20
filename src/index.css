@@ -48,6 +48,9 @@
     --success: 142 64% 38%;
     --warning: 38 92% 50%;
     --info: 210 92% 50%;
+
+    --feature-accent: #FACC15;
+    --feature-accent-soft: rgba(250, 204, 21, 0.1);
   }
 }
 

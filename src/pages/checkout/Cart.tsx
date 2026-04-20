@@ -38,7 +38,7 @@ export default function CartPage() {
         </div>
         <Link 
           to="/" 
-          className="hidden sm:inline-flex text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors border-b border-vanqis-base-text hover:border-vanqis-fresh-carrot pb-0.5"
+          className="hidden sm:inline-flex text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors border-b border-vanqis-base-text hover:border-vanqis-accent pb-0.5"
         >
           Lanjut Belanja
         </Link>
@@ -73,7 +73,7 @@ export default function CartPage() {
                     <p className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/50">
                       {product.category_name}
                     </p>
-                    <Link to={`/product/${product.id}`} className="font-black text-lg uppercase tracking-tight text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors line-clamp-2 leading-tight">
+                    <Link to={`/product/${product.id}`} className="font-black text-lg uppercase tracking-tight text-vanqis-base-text hover:text-vanqis-accent transition-colors line-clamp-2 leading-tight">
                       {product.name}
                     </Link>
                   </div>
@@ -119,7 +119,7 @@ export default function CartPage() {
           <div className="sm:hidden mt-4">
             <Link 
               to="/" 
-              className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors"
+              className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors"
             >
               ← Kembali Belanja
             </Link>
@@ -160,7 +160,7 @@ export default function CartPage() {
             
             <Link
               to="/checkout"
-              className="flex items-center justify-center w-full h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-fresh-carrot transition-all outline-none group"
+              className="flex items-center justify-center w-full h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-accent transition-all outline-none group"
             >
               Lanjut Checkout
               <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" strokeWidth={2} />

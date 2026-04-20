@@ -61,7 +61,7 @@ export default function Header() {
           {/* Logo Merek */}
           <Link to="/" className="flex items-center shrink-0 group">
             <span className="text-lg md:text-2xl font-black tracking-tight text-vanqis-base-text uppercase leading-none">
-              Vanqis<span className="text-vanqis-fresh-carrot">Fresh</span>
+              Vanqis<span className="text-vanqis-accent transition-colors duration-500">Fresh</span>
             </span>
           </Link>
 
@@ -73,9 +73,9 @@ export default function Header() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Cari produk segar..."
-              className="w-full h-11 pl-10 pr-4 bg-transparent border border-vanqis-base-soft text-vanqis-base-text placeholder:text-vanqis-base-text/40 rounded-none focus:outline-none focus:border-vanqis-base-text transition-colors text-sm"
+              className="w-full h-11 pl-10 pr-4 bg-transparent border border-vanqis-base-soft text-vanqis-base-text placeholder:text-vanqis-base-text/40 rounded-none focus:outline-none focus:border-vanqis-accent transition-colors text-sm"
             />
-            <button type="submit" className="absolute right-0 top-0 bottom-0 px-6 bg-vanqis-base-text text-vanqis-base-white text-xs font-bold uppercase tracking-wider hover:bg-vanqis-fresh-carrot transition-colors">
+            <button type="submit" className="absolute right-0 top-0 bottom-0 px-6 bg-vanqis-base-text text-vanqis-base-white text-xs font-bold uppercase tracking-wider hover:bg-vanqis-accent transition-colors">
               Cari
             </button>
           </form>
@@ -86,13 +86,13 @@ export default function Header() {
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-2 group outline-none">
                   <div className="relative">
-                    <User className="w-5 h-5 text-vanqis-base-text group-hover:text-vanqis-fresh-carrot transition-colors" strokeWidth={1.5} />
+                    <User className="w-5 h-5 text-vanqis-base-text group-hover:text-vanqis-accent transition-colors" strokeWidth={1.5} />
                   </div>
                   <div className="hidden lg:flex flex-col text-left">
                     <span className="text-[9px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-0.5">
                       Akun Saya
                     </span>
-                    <span className="text-xs font-black uppercase tracking-widest text-vanqis-base-text group-hover:text-vanqis-fresh-carrot transition-colors">
+                    <span className="text-xs font-black uppercase tracking-widest text-vanqis-base-text group-hover:text-vanqis-accent transition-colors">
                       {user?.first_name}
                     </span>
                   </div>
@@ -120,21 +120,21 @@ export default function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link to="/login" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors">
+              <Link to="/login" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
                 Masuk
               </Link>
             )}
 
             <Link to="/cart" className="flex items-center gap-2 group">
               <div className="relative">
-                <ShoppingCart className="w-5 h-5 text-vanqis-base-text group-hover:text-vanqis-fresh-carrot transition-colors" strokeWidth={1.5} />
+                <ShoppingCart className="w-5 h-5 text-vanqis-base-text group-hover:text-vanqis-accent transition-colors" strokeWidth={1.5} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-vanqis-fresh-carrot text-vanqis-base-white text-[9px] font-bold flex items-center justify-center rounded-full border border-vanqis-base-white">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-vanqis-accent text-vanqis-base-white text-[9px] font-bold flex items-center justify-center rounded-full border border-vanqis-base-white transition-colors duration-500">
                     {totalItems > 9 ? '9+' : totalItems}
                   </span>
                 )}
               </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hidden lg:block group-hover:text-vanqis-fresh-carrot transition-colors">
+              <span className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hidden lg:block group-hover:text-vanqis-accent transition-colors">
                 Keranjang
               </span>
             </Link>
@@ -145,7 +145,7 @@ export default function Header() {
             <Link to="/cart" className="relative p-2 outline-none active:scale-90 transition-transform">
               <ShoppingCart className="w-5.5 h-5.5 text-vanqis-base-text" strokeWidth={1.5} />
               {totalItems > 0 && (
-                <span className="absolute top-1 right-0.5 w-4 h-4 bg-vanqis-fresh-carrot text-vanqis-base-white text-[9px] font-black flex items-center justify-center rounded-none shadow-sm">
+                <span className="absolute top-1 right-0.5 w-4 h-4 bg-vanqis-accent text-vanqis-base-white text-[9px] font-black flex items-center justify-center rounded-none shadow-sm transition-colors duration-500">
                   {totalItems > 9 ? '9+' : totalItems}
                 </span>
               )}
@@ -174,27 +174,30 @@ export default function Header() {
       {/* Navigasi Bawah */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-vanqis-base-white border-t border-vanqis-base-soft flex items-center justify-between px-6 py-3 pb-safe">
         <Link to="/" className={cn(
-          "flex flex-col items-center gap-1 transition-colors",
-          isActive('/') ? "text-vanqis-base-text" : "text-vanqis-base-text/40 hover:text-vanqis-base-text"
+          "flex flex-col items-center gap-1 transition-all duration-300 relative px-4 py-1",
+          isActive('/') ? "text-vanqis-accent" : "text-vanqis-base-text/40"
         )}>
-          <Home className="w-5 h-5" strokeWidth={isActive('/') ? 2 : 1.5} />
-          <span className="text-[9px] font-bold uppercase tracking-wider">Beranda</span>
+          {isActive('/') && <div className="absolute inset-0 bg-vanqis-accent-soft rounded-xl -z-10" />}
+          <Home className="w-5 h-5" strokeWidth={isActive('/') ? 2.5 : 1.5} />
+          <span className="text-[9px] font-black uppercase tracking-wider">Beranda</span>
         </Link>
         
         <Link to="/orders" className={cn(
-          "flex flex-col items-center gap-1 transition-colors",
-          isActive('/orders') ? "text-vanqis-base-text" : "text-vanqis-base-text/40 hover:text-vanqis-base-text"
+          "flex flex-col items-center gap-1 transition-all duration-300 relative px-4 py-1",
+          isActive('/orders') ? "text-vanqis-accent" : "text-vanqis-base-text/40"
         )}>
-          <Package className="w-5 h-5" strokeWidth={isActive('/orders') ? 2 : 1.5} />
-          <span className="text-[9px] font-bold uppercase tracking-wider">Pesanan</span>
+          {isActive('/orders') && <div className="absolute inset-0 bg-vanqis-accent-soft rounded-xl -z-10" />}
+          <Package className="w-5 h-5" strokeWidth={isActive('/orders') ? 2.5 : 1.5} />
+          <span className="text-[9px] font-black uppercase tracking-wider">Pesanan</span>
         </Link>
 
         <Link to={isAuthenticated ? "/profile" : "/login"} className={cn(
-          "flex flex-col items-center gap-1 transition-colors",
-          isActive('/login') || isActive('/profile') ? "text-vanqis-base-text" : "text-vanqis-base-text/40 hover:text-vanqis-base-text"
+          "flex flex-col items-center gap-1 transition-all duration-300 relative px-4 py-1",
+          isActive('/login') || isActive('/profile') ? "text-vanqis-accent" : "text-vanqis-base-text/40"
         )}>
-          <User className="w-5 h-5" strokeWidth={isActive('/login') || isActive('/profile') ? 2 : 1.5} />
-          <span className="text-[9px] font-bold uppercase tracking-wider">{isAuthenticated ? "Akun" : "Masuk"}</span>
+          {(isActive('/login') || isActive('/profile')) && <div className="absolute inset-0 bg-vanqis-accent-soft rounded-xl -z-10" />}
+          <User className="w-5 h-5" strokeWidth={isActive('/login') || isActive('/profile') ? 2.5 : 1.5} />
+          <span className="text-[9px] font-black uppercase tracking-wider">{isAuthenticated ? "Akun" : "Masuk"}</span>
         </Link>
       </nav>
     </>

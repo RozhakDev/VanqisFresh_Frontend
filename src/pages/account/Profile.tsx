@@ -93,7 +93,7 @@ export default function Profile() {
     <div className="container-app py-8 max-w-3xl mx-auto px-4">
     {/* Navigasi */}
     <button 
-      className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors mb-8 outline-none"
+      className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors mb-8 outline-none"
       onClick={() => navigate("/")}
     >
       <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
@@ -197,7 +197,7 @@ export default function Profile() {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full sm:w-auto rounded-none h-12 px-8 bg-vanqis-base-text text-vanqis-base-white hover:bg-vanqis-fresh-carrot transition-colors font-bold uppercase tracking-widest text-xs"
+                className="w-full sm:w-auto rounded-none h-12 px-8 bg-vanqis-base-text text-vanqis-base-white hover:bg-vanqis-accent transition-colors font-bold uppercase tracking-widest text-xs"
               >
                 {isLoading ? (
                   <>

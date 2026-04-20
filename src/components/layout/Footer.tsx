@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-6">
             <Link to="/" className="flex flex-col">
               <span className="text-2xl font-black tracking-tight text-vanqis-base-text uppercase leading-none">
-                Vanqis<span className="text-vanqis-fresh-carrot">Fresh</span>
+                Vanqis<span className="text-vanqis-accent">Fresh</span>
               </span>
             </Link>
             <p className="text-vanqis-base-text/70 text-sm leading-relaxed max-w-xs">
@@ -39,14 +39,14 @@ export default function Footer() {
             <div className="flex items-center gap-4 pt-4">
               {instagram && (
                 <>
-                  <a href={instagram.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors">
+                  <a href={instagram.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
                     Instagram
                   </a>
                   <span className="text-vanqis-base-soft">|</span>
                 </>
               )}
               {(whatsapp || (!whatsapp && !instagram)) && (
-                <a href={whatsapp?.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors">
+                <a href={whatsapp?.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
                   WhatsApp
                 </a>
               )}
@@ -91,7 +91,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <span className="text-[10px] font-bold text-vanqis-base-text uppercase tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-vanqis-fresh-carrot animate-pulse"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-vanqis-accent animate-pulse"></span>
               Segar Setiap Hari
             </span>
           </div>

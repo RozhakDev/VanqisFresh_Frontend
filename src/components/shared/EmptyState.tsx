@@ -30,7 +30,7 @@ export default function EmptyState({ title, description, showAction = true }: Pr
       {showAction && (
         <Link
           to="/"
-          className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors"
+          className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-accent transition-colors"
         >
           Mulai Belanja
         </Link>

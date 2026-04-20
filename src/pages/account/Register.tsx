@@ -82,7 +82,7 @@ const Register = () => {
     <div className="min-h-screen flex items-center justify-center bg-vanqis-base-layout py-12 px-4 sm:px-6 lg:px-8 relative">
       {/* Tombol Kembali */}
       <button 
-        className="absolute top-8 left-6 sm:left-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors outline-none"
+        className="absolute top-8 left-6 sm:left-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors outline-none"
         onClick={() => navigate("/")}
       >
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
@@ -211,7 +211,7 @@ const Register = () => {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full rounded-none h-14 bg-vanqis-base-text text-vanqis-base-white hover:bg-vanqis-fresh-carrot transition-colors font-bold uppercase tracking-widest text-xs"
+                className="w-full rounded-none h-14 bg-vanqis-base-text text-vanqis-base-white hover:bg-vanqis-accent transition-colors font-bold uppercase tracking-widest text-xs"
               >
                 {isLoading ? (
                   <>
@@ -229,7 +229,7 @@ const Register = () => {
         <div className="mt-8 pt-8 border-t border-vanqis-base-soft text-center">
           <p className="text-xs text-vanqis-base-text/60 font-medium">
             Sudah punya akun?{" "}
-            <Link to="/login" className="text-vanqis-base-text font-bold uppercase tracking-widest hover:text-vanqis-fresh-carrot transition-colors ml-1 border-b border-vanqis-base-text hover:border-vanqis-fresh-carrot pb-0.5">
+            <Link to="/login" className="text-vanqis-base-text font-bold uppercase tracking-widest hover:text-vanqis-accent transition-colors ml-1 border-b border-vanqis-base-text hover:border-vanqis-accent pb-0.5">
               Masuk Di Sini
             </Link>
           </p>

@@ -27,13 +27,13 @@ const getStatusConfig = (status: OrderStatus) => {
     case 'Pending':
       return { color: 'text-vanqis-fresh-tomato border-vanqis-fresh-tomato', icon: Clock };
     case 'Confirmed':
-      return { color: 'text-vanqis-fresh-carrot border-vanqis-fresh-carrot', icon: CheckCircle2 };
+      return { color: 'text-vanqis-accent border-vanqis-accent', icon: CheckCircle2 };
     case 'Preparing':
       return { color: 'text-vanqis-fresh-grape border-vanqis-fresh-grape', icon: Package };
     case 'Processing':
       return { color: 'text-vanqis-fresh-banana border-vanqis-fresh-banana', icon: Loader2 };
     case 'Shipping':
-      return { color: 'text-vanqis-fresh-carrot border-vanqis-fresh-carrot', icon: Truck };
+      return { color: 'text-vanqis-accent border-vanqis-accent', icon: Truck };
     case 'Completed':
       return { color: 'text-vanqis-core-green border-vanqis-core-green', icon: CheckCircle2 };
     default:
@@ -94,7 +94,7 @@ const Orders = () => {
             </p>
             <button
               onClick={() => navigate("/")}
-              className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-fresh-carrot transition-colors outline-none"
+              className="h-12 px-8 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center hover:bg-vanqis-accent transition-colors outline-none"
             >
               Mulai Belanja
             </button>
@@ -114,7 +114,7 @@ const Orders = () => {
                 className="bg-vanqis-base-white border border-vanqis-base-soft hover:border-vanqis-base-text transition-colors cursor-pointer group flex flex-col md:flex-row md:items-center justify-between p-6 sm:p-8 relative outline-none"
                 onClick={() => navigate(`/order/${order.public_id}`)}
               >
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-vanqis-fresh-carrot scale-y-0 group-hover:scale-y-100 transition-transform origin-top" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-vanqis-accent scale-y-0 group-hover:scale-y-100 transition-transform origin-top" />
 
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3">
@@ -143,12 +143,12 @@ const Orders = () => {
                 <div className="mt-6 md:mt-0 flex items-end justify-between md:flex-col md:items-end gap-2 md:gap-4 border-t md:border-t-0 border-vanqis-base-soft pt-6 md:pt-0">
                   <div className="text-left md:text-right">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-1">Total Pembayaran</p>
-                    <p className="text-2xl font-black tracking-tight text-vanqis-base-text leading-none group-hover:text-vanqis-fresh-carrot transition-colors">
+                    <p className="text-2xl font-black tracking-tight text-vanqis-base-text leading-none group-hover:text-vanqis-accent transition-colors">
                       {formatPrice(order.total_price)}
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text group-hover:text-vanqis-fresh-carrot transition-colors">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text group-hover:text-vanqis-accent transition-colors">
                     Lihat Detail
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
                   </div>

@@ -44,7 +44,7 @@ export default function PromoBanner({ promos }: Props) {
   if (!promos || promos.length === 0) return null;
 
   const promoColors = [
-    "bg-vanqis-fresh-carrot text-vanqis-base-white",
+    "bg-vanqis-accent text-vanqis-base-white",
     "bg-vanqis-base-text text-vanqis-base-white",
     "bg-vanqis-fresh-tomato text-vanqis-base-white",
     "bg-vanqis-fresh-grape text-vanqis-base-white",

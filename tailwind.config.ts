@@ -17,12 +17,12 @@ export default {
         // Semantic overrides
         border: "#E5E7EB",
         input: "#F3F4F6",
-        ring: "#F97316",
+        ring: "var(--feature-accent)",
         background: "#FFFFFF",
         foreground: "#1F2937",
 
         primary: {
-          DEFAULT: "#F97316",
+          DEFAULT: "var(--feature-accent)",
           foreground: "#FFFFFF",
         },
         secondary: {
@@ -38,8 +38,8 @@ export default {
           foreground: "#6B7280",
         },
         accent: {
-          DEFAULT: "#F3F4F6",
-          foreground: "#1F2937",
+          DEFAULT: "var(--feature-accent-soft)",
+          foreground: "var(--feature-accent)",
         },
         
         // Vanqis Brand Colors
@@ -59,7 +59,10 @@ export default {
             carrot: "#F97316",
             banana: "#FACC15",
             grape: "#8B5CF6",
-          }
+            leaf: "#22C55E",
+          },
+          accent: "var(--feature-accent)",
+          "accent-soft": "var(--feature-accent-soft)",
         },
 
         popover: {

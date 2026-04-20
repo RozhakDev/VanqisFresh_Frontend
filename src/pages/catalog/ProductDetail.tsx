@@ -38,7 +38,7 @@ export default function ProductDetail() {
           <AlertCircle className="w-10 h-10 text-vanqis-base-text/40" strokeWidth={1} />
         </div>
         <h2 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-4">Produk Tidak Ditemukan</h2>
-        <Link to="/" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-fresh-carrot transition-colors border-b border-vanqis-base-text hover:border-vanqis-fresh-carrot pb-0.5">
+        <Link to="/" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors border-b border-vanqis-base-text hover:border-vanqis-accent pb-0.5">
           Kembali ke Katalog
         </Link>
       </div>
@@ -107,7 +107,7 @@ export default function ProductDetail() {
             </p>
           </div>
 
-          <div className="w-12 h-1 bg-vanqis-fresh-carrot mb-8" />
+          <div className="w-12 h-1 bg-vanqis-accent mb-8" />
 
           <div className="mb-10 space-y-6">
             <p className="text-sm md:text-base text-vanqis-base-text/70 leading-relaxed font-medium">
@@ -153,7 +153,7 @@ export default function ProductDetail() {
                   
                   <button
                     onClick={handleAdd}
-                    className="flex-1 h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-vanqis-fresh-carrot transition-colors outline-none"
+                    className="flex-1 h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-vanqis-accent transition-colors outline-none"
                   >
                     <ShoppingCart className="w-4 h-4" strokeWidth={2} />
                     Tambah ke Keranjang

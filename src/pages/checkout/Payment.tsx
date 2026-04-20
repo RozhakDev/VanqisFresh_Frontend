@@ -132,7 +132,7 @@ const PaymentUpload = () => {
     return (
       <div className="container-app py-20 text-center">
         <h2 className="font-black text-2xl uppercase tracking-tight text-vanqis-base-text mb-4">Pesanan Tidak Ditemukan</h2>
-        <button onClick={() => navigate("/")} className="text-xs font-bold uppercase tracking-widest border-b border-vanqis-base-text pb-1 hover:text-vanqis-fresh-carrot transition-colors">
+        <button onClick={() => navigate("/")} className="text-xs font-bold uppercase tracking-widest border-b border-vanqis-base-text pb-1 hover:text-vanqis-accent transition-colors">
           Kembali ke Beranda
         </button>
       </div>
@@ -197,7 +197,7 @@ const PaymentUpload = () => {
                             <p className="text-[10px] font-bold text-vanqis-base-text/50 uppercase tracking-widest mb-2">{pm.provider_type}</p>
                           </div>
                           {pm.provider_type === 'QRIS' && (
-                            <span className="bg-vanqis-fresh-carrot text-vanqis-base-white text-[8px] font-black uppercase tracking-widest px-2 py-0.5">Scan</span>
+                            <span className="bg-vanqis-accent text-vanqis-base-white text-[8px] font-black uppercase tracking-widest px-2 py-0.5">Scan</span>
                           )}
                         </div>
                         
@@ -295,7 +295,7 @@ const PaymentUpload = () => {
                 </div>
 
                 <button 
-                  className="w-full flex items-center justify-center h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-fresh-carrot transition-colors outline-none disabled:opacity-50"
+                  className="w-full flex items-center justify-center h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-accent transition-colors outline-none disabled:opacity-50"
                   disabled={!file || isUploading}
                   onClick={handleUpload}
                 >

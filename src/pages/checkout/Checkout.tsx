@@ -94,7 +94,7 @@ export default function Checkout() {
               <h2 className="text-sm font-black uppercase tracking-widest text-vanqis-base-text flex items-center gap-2">
                 <MapPin className="w-4 h-4" /> Informasi Pengiriman
               </h2>
-              <button onClick={() => navigate('/profile')} className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-fresh-carrot transition-colors flex items-center gap-1 outline-none">
+              <button onClick={() => navigate('/profile')} className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-accent transition-colors flex items-center gap-1 outline-none">
                 <Edit2 className="w-3 h-3" /> Ubah
               </button>
             </div>
@@ -166,7 +166,7 @@ export default function Checkout() {
             <button
               onClick={handleCheckout} 
               disabled={loading}
-              className="flex items-center justify-center w-full h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-fresh-carrot transition-all outline-none disabled:opacity-50"
+              className="flex items-center justify-center w-full h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-accent transition-all outline-none disabled:opacity-50"
             >
               {loading ? (
                 <>
