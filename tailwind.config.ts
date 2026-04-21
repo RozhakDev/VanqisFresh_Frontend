@@ -19,7 +19,7 @@ export default {
         input: "#F3F4F6",
         ring: "var(--feature-accent)",
         background: "#FFFFFF",
-        foreground: "#1F2937",
+        foreground: "#134E4A",
 
         primary: {
           DEFAULT: "var(--feature-accent)",
@@ -27,7 +27,7 @@ export default {
         },
         secondary: {
           DEFAULT: "#F3F4F6",
-          foreground: "#1F2937",
+          foreground: "#134E4A",
         },
         destructive: {
           DEFAULT: "#EF4444",
@@ -46,9 +46,9 @@ export default {
         vanqis: {
           base: {
             white: "#FFFFFF",
-            layout: "#F6F8F9",
-            soft: "#E2E4E7",
-            text: "#111213",
+            layout: "#F4F7F5",
+            soft: "#E2E8E4",
+            text: "#134E4A",
           },
           core: {
             green: "#2F855A",
