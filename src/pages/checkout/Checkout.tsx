@@ -78,9 +78,11 @@ export default function Checkout() {
       return;
     }
 
-    const formattedItems = items.map((item, index) => 
-      `${index + 1}. ${item.product.name}\n   Jumlah: ${item.quantity}\n   Harga: ${formatPrice(item.product.price)}\n   Subtotal: ${formatPrice(item.product.price * item.quantity)}`
-    ).join('\n\n');
+    const formattedItems = items.map((item, index) => {
+      const unit = item.product.unit ? `/${item.product.unit}` : '';
+      const quantityText = item.product.unit ? `${item.quantity} ${item.product.unit}` : `${item.quantity}`;
+      return `${index + 1}. ${item.product.name}\n   Jumlah: ${quantityText}\n   Harga: ${formatPrice(item.product.price)}${unit}\n   Subtotal: ${formatPrice(item.product.price * item.quantity)}`;
+    }).join('\n\n');
 
     const total = formatPrice(totalPrice());
     const customerInfo = `*Informasi Penerima:*\nNama: ${user?.first_name} ${user?.last_name || ''}\nNo. WhatsApp: ${user?.phone_number}\nAlamat: ${user?.address}`;

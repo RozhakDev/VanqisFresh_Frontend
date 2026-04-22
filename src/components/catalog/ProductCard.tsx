@@ -73,7 +73,10 @@ export default function ProductCard({ product }: Props) {
         <div className="mt-auto flex items-end justify-between gap-2">
           <div className="flex flex-col">
             <span className="text-[10px] font-medium text-vanqis-base-text/50 uppercase tracking-wider mb-0.5">Price</span>
-            <p className="font-black text-base text-vanqis-base-text">{formatPrice(product.price)}</p>
+            <p className="font-black text-base text-vanqis-base-text">
+              {formatPrice(product.price)}
+              {product.unit && <span className="text-xs font-medium text-vanqis-base-text/60 ml-1">/{product.unit}</span>}
+            </p>
           </div>
           
           {product.is_available && product.stock > 0 && (

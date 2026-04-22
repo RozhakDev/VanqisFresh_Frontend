@@ -90,7 +90,10 @@ export default function CartPage() {
                 <div className="flex flex-row items-end sm:items-center justify-between mt-auto">
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-0.5">Harga</span>
-                    <p className="font-bold text-base text-vanqis-base-text">{formatPrice(product.price)}</p>
+                    <p className="font-bold text-base text-vanqis-base-text">
+                      {formatPrice(product.price)}
+                      {product.unit && <span className="text-xs font-medium text-vanqis-base-text/60 ml-1">/{product.unit}</span>}
+                    </p>
                   </div>
                   
                   <div className="flex items-center border border-vanqis-base-text h-10 bg-vanqis-base-white shrink-0">
@@ -138,7 +141,7 @@ export default function CartPage() {
               {items.map(({ product, quantity }) => (
                 <div key={product.id} className="flex justify-between items-start gap-4">
                   <span className="text-vanqis-base-text/70 line-clamp-2">
-                    {product.name} <span className="text-vanqis-base-text font-bold">x{quantity}</span>
+                    {product.name} <span className="text-vanqis-base-text font-bold">x{quantity} {product.unit || ''}</span>
                   </span>
                   <span className="shrink-0 text-vanqis-base-text font-bold">
                     {formatPrice(product.price * quantity)}

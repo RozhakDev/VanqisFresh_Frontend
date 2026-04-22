@@ -104,6 +104,7 @@ export default function ProductDetail() {
             </h1>
             <p className="text-3xl font-bold text-vanqis-base-text">
               {formatPrice(product.price)}
+              {product.unit && <span className="text-lg font-medium text-vanqis-base-text/60 ml-2">/{product.unit}</span>}
             </p>
           </div>
 
@@ -126,7 +127,7 @@ export default function ProductDetail() {
                 )} />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text">
                   {product.is_available && product.stock > 0
-                    ? `Stok Tersedia: ${product.stock}`
+                    ? `Stok Tersedia: ${product.stock} ${product.unit || ''}`
                     : 'Stok Habis'}
                 </span>
               </div>
