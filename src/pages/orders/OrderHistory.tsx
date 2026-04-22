@@ -15,6 +15,9 @@ import {
   ArrowRight
 } from "lucide-react";
 import { OrderHistoryItem, OrderStatus } from "@/types";
+import { useAuthStore } from "@/stores/auth";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 /**
  * Menghasilkan gaya visual dan ikon yang sesuai untuk setiap status pesanan.
@@ -48,6 +51,14 @@ const getStatusConfig = (status: OrderStatus) => {
  */
 const Orders = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      toast.error("Silakan masuk terlebih dahulu untuk melihat pesanan.");
+      navigate('/login?redirect=/orders');
+    }
+  }, [isAuthenticated, authLoading, navigate]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["orders"],
@@ -55,9 +66,10 @@ const Orders = () => {
       const response = await api.get("/orders/");
       return response.data;
     },
+    enabled: isAuthenticated,
   });
 
-  if (isLoading) {
+  if (authLoading || isLoading) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-vanqis-base-text" />
@@ -69,7 +81,7 @@ const Orders = () => {
 
   return (
     <div className="container-app py-8 md:py-12 max-w-5xl mx-auto">
-      {/* Ringkasan Atas */}
+      {/* Header Halaman */}
       <div className="mb-10 pb-6 border-b border-vanqis-base-soft">
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none">
           Riwayat Pesanan
@@ -81,7 +93,7 @@ const Orders = () => {
 
       {orders.length === 0 ? (
         <>
-          {/* Keadaan Kosong */}
+          {/* State Kosong */}
           <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-vanqis-base-soft bg-vanqis-base-white/50">
             <div className="w-20 h-20 bg-vanqis-base-soft flex items-center justify-center mb-8">
               <ShoppingBag className="w-8 h-8 text-vanqis-base-text/40" strokeWidth={1} />

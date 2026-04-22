@@ -133,31 +133,33 @@ export default function ProductDetail() {
               </div>
 
               {product.is_available && product.stock > 0 && (
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex items-center border border-vanqis-base-text h-14 bg-vanqis-base-white w-full sm:w-auto shrink-0">
+                <div className="flex flex-row gap-3 sm:gap-4 mt-2">
+                  {/* Pilihan Kuantitas */}
+                  <div className="flex items-center border border-vanqis-base-text h-12 sm:h-14 bg-vanqis-base-white w-[110px] sm:w-auto shrink-0">
                     <button 
                       onClick={() => setQty(q => Math.max(1, q - 1))} 
-                      className="w-14 h-full flex items-center justify-center hover:bg-vanqis-base-soft transition-colors outline-none"
+                      className="w-10 sm:w-14 h-full flex items-center justify-center hover:bg-vanqis-base-soft transition-colors outline-none"
                     >
                       <Minus className="w-4 h-4 text-vanqis-base-text" strokeWidth={1.5} />
                     </button>
-                    <span className="w-12 text-center font-black text-vanqis-base-text text-sm">
+                    <span className="flex-1 sm:w-12 text-center font-black text-vanqis-base-text text-sm">
                       {qty}
                     </span>
                     <button 
                       onClick={() => setQty(q => Math.min(product.stock, q + 1))} 
-                      className="w-14 h-full flex items-center justify-center hover:bg-vanqis-base-soft transition-colors outline-none"
+                      className="w-10 sm:w-14 h-full flex items-center justify-center hover:bg-vanqis-base-soft transition-colors outline-none"
                     >
                       <Plus className="w-4 h-4 text-vanqis-base-text" strokeWidth={1.5} />
                     </button>
                   </div>
                   
+                  {/* Tombol Tambah */}
                   <button
                     onClick={handleAdd}
-                    className="flex-1 h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-vanqis-accent transition-colors outline-none"
+                    className="flex-1 h-12 sm:h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-[10px] sm:text-xs flex items-center justify-center gap-2 sm:gap-3 hover:bg-vanqis-accent transition-colors outline-none px-2"
                   >
-                    <ShoppingCart className="w-4 h-4" strokeWidth={2} />
-                    Tambah ke Keranjang
+                    <ShoppingCart className="w-4 h-4 shrink-0" strokeWidth={2} />
+                    <span className="truncate">Tambah <span className="hidden sm:inline">ke Keranjang</span></span>
                   </button>
                 </div>
               )}

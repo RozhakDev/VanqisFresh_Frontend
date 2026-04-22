@@ -65,27 +65,27 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       {/* Detail */}
-      <div className="p-4 sm:p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-sm leading-tight line-clamp-2 mb-4 group-hover:text-vanqis-accent transition-colors text-vanqis-base-text">
+      <div className="p-3 sm:p-5 flex flex-col flex-1">
+        <h3 className="font-bold text-xs sm:text-sm leading-tight line-clamp-2 mb-3 sm:mb-4 group-hover:text-vanqis-accent transition-colors text-vanqis-base-text">
           {product.name}
         </h3>
         
-        <div className="mt-auto flex items-end justify-between gap-2">
+        <div className="mt-auto flex items-end justify-between gap-1.5 sm:gap-2">
           <div className="flex flex-col min-w-0 flex-1">
-            <span className="text-[10px] font-medium text-vanqis-base-text/50 uppercase tracking-wider mb-0.5">Price</span>
-            <p className="font-black text-sm sm:text-base text-vanqis-base-text flex flex-wrap items-baseline gap-x-0.5">
-              <span>{formatPrice(product.price)}</span>
-              {product.unit && <span className="text-[9px] sm:text-xs font-medium text-vanqis-base-text/60">/{product.unit}</span>}
+            <span className="text-[9px] sm:text-[10px] font-medium text-vanqis-base-text/50 uppercase tracking-wider mb-0.5">Price</span>
+            <p className="font-black text-[11px] sm:text-base text-vanqis-base-text flex flex-wrap items-baseline gap-x-0.5">
+              <span className="truncate">{formatPrice(product.price)}</span>
+              {product.unit && <span className="text-[8px] sm:text-xs font-medium text-vanqis-base-text/60">/{product.unit}</span>}
             </p>
           </div>
           
           {product.is_available && product.stock > 0 && (
             <button
               onClick={handleAdd}
-              className="shrink-0 w-10 h-10 bg-vanqis-base-white border border-vanqis-base-text text-vanqis-base-text flex items-center justify-center hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-colors"
+              className="shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-vanqis-base-white border border-vanqis-base-text text-vanqis-base-text flex items-center justify-center hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-colors"
               aria-label={`Add ${product.name} to cart`}
             >
-              <Plus className="w-5 h-5" strokeWidth={1.5} />
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.5} />
             </button>
           )}
         </div>
