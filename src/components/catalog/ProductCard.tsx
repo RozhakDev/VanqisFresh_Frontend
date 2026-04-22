@@ -39,12 +39,12 @@ export default function ProductCard({ product }: Props) {
       className="group flex flex-col bg-vanqis-base-white border border-vanqis-base-soft hover:border-vanqis-base-text transition-colors duration-300 relative h-full"
     >
       {/* Gambar */}
-      <div className="aspect-[4/3] bg-vanqis-base-soft/50 relative overflow-hidden flex items-center justify-center border-b border-vanqis-base-soft p-4">
+      <div className="aspect-[4/3] bg-vanqis-base-soft/50 relative overflow-hidden flex items-center justify-center border-b border-vanqis-base-soft">
         {product.image ? (
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
         ) : (
@@ -71,11 +71,11 @@ export default function ProductCard({ product }: Props) {
         </h3>
         
         <div className="mt-auto flex items-end justify-between gap-2">
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0 flex-1">
             <span className="text-[10px] font-medium text-vanqis-base-text/50 uppercase tracking-wider mb-0.5">Price</span>
-            <p className="font-black text-base text-vanqis-base-text">
-              {formatPrice(product.price)}
-              {product.unit && <span className="text-xs font-medium text-vanqis-base-text/60 ml-1">/{product.unit}</span>}
+            <p className="font-black text-sm sm:text-base text-vanqis-base-text flex flex-wrap items-baseline gap-x-0.5">
+              <span>{formatPrice(product.price)}</span>
+              {product.unit && <span className="text-[9px] sm:text-xs font-medium text-vanqis-base-text/60">/{product.unit}</span>}
             </p>
           </div>
           

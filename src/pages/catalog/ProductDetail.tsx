@@ -70,12 +70,12 @@ export default function ProductDetail() {
         
         {/* Gambar Produk */}
         <div className="lg:col-span-7">
-          <div className="aspect-[4/3] sm:aspect-square bg-vanqis-base-soft/30 border border-vanqis-base-soft relative overflow-hidden flex items-center justify-center p-8 group">
+          <div className="aspect-[4/3] sm:aspect-square bg-vanqis-base-soft/30 border border-vanqis-base-soft relative overflow-hidden flex items-center justify-center group">
             {product.image ? (
               <img 
                 src={product.image} 
                 alt={product.name} 
-                className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
               />
             ) : (
               <Package className="w-32 h-32 text-vanqis-base-text/10" strokeWidth={0.5} />
