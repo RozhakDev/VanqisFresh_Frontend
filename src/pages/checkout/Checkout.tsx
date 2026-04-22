@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/stores/cart';
 import { useAuthStore } from '@/stores/auth';
-import api from '@/lib/api';
+import api, { getStoreContacts } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 import { toast } from 'sonner';
 import EmptyState from '@/components/shared/EmptyState';
-import { Loader2, MapPin, User, Phone, Edit2, ArrowRight } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import DeliveryInfo from '@/components/checkout/DeliveryInfo';
+import CheckoutMethodSelector from '@/components/checkout/CheckoutMethodSelector';
+import OrderSummary from '@/components/checkout/OrderSummary';
 
 /**
  * Menyusun langkah akhir checkout sebelum pesanan dibuat.
@@ -20,6 +23,8 @@ export default function Checkout() {
 
   const [note, setNote] = useState('');
   const [loading, setLoading] = useState(false);
+  const [checkoutMethod, setCheckoutMethod] = useState<'whatsapp' | 'manual'>('whatsapp');
+  const [waNumber, setWaNumber] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -27,6 +32,23 @@ export default function Checkout() {
       navigate('/login?redirect=/checkout');
     }
   }, [isAuthenticated, authLoading, navigate]);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const responseData = await getStoreContacts();
+        const contacts = Array.isArray(responseData) ? responseData : responseData?.results || [];
+        
+        const waContact = contacts.find((c: any) => c.platform?.toLowerCase() === 'whatsapp');
+        if (waContact) {
+          setWaNumber(waContact.account_id);
+        }
+      } catch (error) {
+        console.error("Failed to fetch store contacts", error);
+      }
+    };
+    fetchContacts();
+  }, []);
 
   if (authLoading) {
     return (
@@ -48,9 +70,38 @@ export default function Checkout() {
   }
 
   /**
-   * Mengirim data checkout ke server untuk membuat pesanan baru.
+   * Memproses checkout WhatsApp dengan generate pesan.
    */
-  const handleCheckout = async () => {
+  const handleWhatsAppCheckout = () => {
+    if (!waNumber) {
+      toast.error("Nomor WhatsApp admin tidak ditemukan. Silakan coba metode Transfer Manual.");
+      return;
+    }
+
+    const formattedItems = items.map((item, index) => 
+      `${index + 1}. ${item.product.name}\n   Jumlah: ${item.quantity}\n   Harga: ${formatPrice(item.product.price)}\n   Subtotal: ${formatPrice(item.product.price * item.quantity)}`
+    ).join('\n\n');
+
+    const total = formatPrice(totalPrice());
+    const customerInfo = `*Informasi Penerima:*\nNama: ${user?.first_name} ${user?.last_name || ''}\nNo. WhatsApp: ${user?.phone_number}\nAlamat: ${user?.address}`;
+    const userNote = note ? `\n*Catatan:* ${note}` : '';
+
+    const message = `Halo VanqisFresh, saya ingin memesan:\n\n${formattedItems}\n\n*Total Pesanan: ${total}*\n\n${customerInfo}${userNote}`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const waUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
+
+    toast.success("Mengarahkan ke WhatsApp...");
+    clearCart();
+    
+    window.open(waUrl, '_blank');
+    navigate('/');
+  };
+
+  /**
+   * Mengirim data checkout ke server untuk metode manual.
+   */
+  const handleManualCheckout = async () => {
     setLoading(true);
     try {
       const payload = {
@@ -72,9 +123,17 @@ export default function Checkout() {
     }
   };
 
+  const handleCheckout = () => {
+    if (checkoutMethod === 'whatsapp') {
+      handleWhatsAppCheckout();
+    } else {
+      handleManualCheckout();
+    }
+  };
+
   return (
     <div className="container-app py-8 md:py-12 max-w-6xl mx-auto">
-      {/* Ringkasan Atas */}
+      {/* Header Halaman */}
       <div className="mb-10 pb-6 border-b border-vanqis-base-soft">
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-vanqis-base-text leading-none">
           Penyelesaian Pesanan
@@ -86,39 +145,14 @@ export default function Checkout() {
 
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
         
-        {/* Detail Pengiriman */}
+        {/* Kolom Kiri */}
         <div className="lg:col-span-7 space-y-10">
           
-          <section>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-black uppercase tracking-widest text-vanqis-base-text flex items-center gap-2">
-                <MapPin className="w-4 h-4" /> Informasi Pengiriman
-              </h2>
-              <button onClick={() => navigate('/profile')} className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/60 hover:text-vanqis-accent transition-colors flex items-center gap-1 outline-none">
-                <Edit2 className="w-3 h-3" /> Ubah
-              </button>
-            </div>
-            
-            <div className="bg-vanqis-base-white border border-vanqis-base-soft p-6">
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-1 flex items-center gap-1.5"><User className="w-3 h-3" /> Penerima</span>
-                    <p className="font-bold text-sm text-vanqis-base-text">{user?.first_name} {user?.last_name}</p>
-                  </div>
-                  <div>
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-1 flex items-center gap-1.5"><Phone className="w-3 h-3" /> Nomor WhatsApp</span>
-                    <p className="font-bold text-sm text-vanqis-base-text">{user?.phone_number}</p>
-                  </div>
-                </div>
-                <div>
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-vanqis-base-text/50 mb-1">Alamat Lengkap</span>
-                  <p className="text-sm leading-relaxed text-vanqis-base-text/80">{user?.address}</p>
-                </div>
-              </div>
-            </div>
-          </section>
+          <DeliveryInfo user={user} />
 
+          <CheckoutMethodSelector method={checkoutMethod} onSelect={setCheckoutMethod} />
+
+          {/* Form Catatan */}
           <section>
             <h2 className="text-sm font-black uppercase tracking-widest text-vanqis-base-text mb-4">
               Catatan Pesanan (Opsional)
@@ -134,55 +168,16 @@ export default function Checkout() {
 
         </div>
 
-        {/* Ringkasan Pesanan */}
+        {/* Kolom Kanan */}
         <div className="lg:col-span-5">
-          <div className="bg-vanqis-base-white border border-vanqis-base-text p-8 sticky top-24">
-            <h2 className="text-xl font-black uppercase tracking-tight text-vanqis-base-text mb-8 pb-4 border-b border-vanqis-base-soft">
-              Ringkasan Pesanan
-            </h2>
-            
-            <div className="space-y-4 text-sm mb-8 font-medium">
-              {items.map(({ product, quantity }) => (
-                <div key={product.id} className="flex justify-between items-start gap-4">
-                  <span className="text-vanqis-base-text/70 line-clamp-2">
-                    {product.name} <span className="text-vanqis-base-text font-bold">x{quantity}</span>
-                  </span>
-                  <span className="shrink-0 text-vanqis-base-text font-bold">
-                    {formatPrice(product.price * quantity)}
-                  </span>
-                </div>
-              ))}
-            </div>
-            
-            <div className="border-t border-vanqis-base-text pt-6 flex flex-col gap-2 mb-8">
-              <div className="flex justify-between items-end">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/70">Total Bayar</span>
-                <span className="text-2xl font-black text-vanqis-base-text tracking-tight leading-none">
-                  {formatPrice(totalPrice())}
-                </span>
-              </div>
-            </div>
-            
-            <button
-              onClick={handleCheckout} 
-              disabled={loading}
-              className="flex items-center justify-center w-full h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-accent transition-all outline-none disabled:opacity-50"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Memproses...
-                </>
-              ) : (
-                <>
-                  Konfirmasi & Buat Pesanan
-                  <ArrowRight className="w-4 h-4 ml-3" strokeWidth={2} />
-                </>
-              )}
-            </button>
-            <p className="text-[9px] font-bold uppercase tracking-widest text-vanqis-base-text/40 text-center mt-4">
-              Anda akan diarahkan ke halaman pembayaran
-            </p>
-          </div>
+          <OrderSummary 
+            items={items}
+            total={totalPrice()}
+            method={checkoutMethod}
+            onCheckout={handleCheckout}
+            loading={loading}
+            disabled={loading || (checkoutMethod === 'whatsapp' && !waNumber)}
+          />
         </div>
 
       </div>
