@@ -65,13 +65,20 @@ const Register = () => {
       toast.success("Registrasi berhasil! Silakan cek email Anda untuk kode OTP.");
       navigate("/verify-email", { state: { email: values.email } });
     } catch (error: any) {
-      const errors = error.response?.data;
-      if (errors) {
-        Object.keys(errors).forEach((key) => {
-          toast.error(`${key}: ${errors[key][0]}`);
+      const responseData = error.response?.data;
+      const apiErrors = responseData?.errors;
+      const message = responseData?.message || "Terjadi kesalahan saat registrasi";
+
+      if (apiErrors) {
+        Object.keys(apiErrors).forEach((key) => {
+          form.setError(key as any, {
+            type: "manual",
+            message: apiErrors[key][0],
+          });
         });
+        toast.error(message);
       } else {
-        toast.error("Terjadi kesalahan saat registrasi");
+        toast.error(message);
       }
     } finally {
       setIsLoading(false);
