@@ -51,9 +51,9 @@ export default function CartPage() {
           {items.map(({ product, quantity }) => (
             <div key={product.id} className="bg-vanqis-base-white border border-vanqis-base-soft flex flex-col sm:flex-row gap-0 sm:gap-6 group relative">
               
-              <div className="w-full sm:w-36 h-40 sm:h-auto bg-vanqis-base-soft/30 overflow-hidden shrink-0 flex items-center justify-center p-4 border-b sm:border-b-0 sm:border-r border-vanqis-base-soft relative">
+              <div className="w-full sm:w-36 h-40 sm:h-auto bg-vanqis-base-soft/30 overflow-hidden shrink-0 flex items-center justify-center border-b sm:border-b-0 sm:border-r border-vanqis-base-soft relative">
                 {product.image ? (
-                  <img src={product.image} alt={product.name} className="w-full h-full object-contain mix-blend-multiply" />
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                 ) : (
                   <Package className="w-8 h-8 text-vanqis-base-text/20" strokeWidth={1} />
                 )}
