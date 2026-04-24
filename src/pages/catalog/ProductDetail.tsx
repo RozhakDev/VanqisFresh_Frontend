@@ -85,7 +85,7 @@ export default function ProductDetail() {
               {product.category_name}
             </span>
 
-            {!product.is_available && (
+            {(!product.is_available || product.stock <= 0) && (
               <div className="absolute inset-0 bg-vanqis-base-white/80 backdrop-blur-[2px] flex items-center justify-center">
                 <span className="border-2 border-vanqis-base-text text-vanqis-base-text text-xs font-black uppercase tracking-[0.3em] px-6 py-3 bg-vanqis-base-white">
                   Sold Out

@@ -55,7 +55,7 @@ export default function ProductCard({ product }: Props) {
           {product.category_name}
         </span>
 
-        {!product.is_available && (
+        {(!product.is_available || product.stock <= 0) && (
           <div className="absolute inset-0 bg-vanqis-base-white/80 backdrop-blur-[2px] flex items-center justify-center">
             <span className="border border-vanqis-base-text text-vanqis-base-text text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-vanqis-base-white">
               Sold Out
