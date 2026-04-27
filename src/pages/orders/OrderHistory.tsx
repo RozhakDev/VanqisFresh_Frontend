@@ -1,6 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import api from "@/lib/api";
 import { formatPrice, cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
@@ -14,6 +12,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { getOrderStatusConfig } from "@/lib/order";
+import { useOrderHistory } from "@/hooks/useOrders";
 
 /**
  * Menampilkan daftar riwayat pesanan milik pengguna.
@@ -31,14 +30,7 @@ const Orders = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["orders"],
-    queryFn: async () => {
-      const response = await api.get("/orders/");
-      return response.data;
-    },
-    enabled: isAuthenticated,
-  });
+  const { data, isLoading, error } = useOrderHistory(isAuthenticated);
 
   if (authLoading || isLoading) {
     return (

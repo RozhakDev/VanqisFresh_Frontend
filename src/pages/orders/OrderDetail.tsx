@@ -17,9 +17,9 @@ import {
   ArrowRight,
   CheckCircle2
 } from "lucide-react";
-import { OrderDetail } from "@/types";
 import PaymentMethodsList from "@/components/checkout/PaymentMethodsList";
 import { getOrderStatusConfig } from "@/lib/order";
+import { useOrderDetail } from "@/hooks/useOrders";
 
 /**
  * Menampilkan informasi detail satu pesanan beserta status pembayarannya.
@@ -30,14 +30,7 @@ const OrderStatusPage = () => {
   const { publicId } = useParams();
   const navigate = useNavigate();
 
-  const { data: order, isLoading, error } = useQuery<OrderDetail>({
-    queryKey: ["order", publicId],
-    queryFn: async () => {
-      const response = await api.get(`/orders/${publicId}/`);
-      return response.data;
-    },
-    enabled: !!publicId,
-  });
+  const { data: order, isLoading, error } = useOrderDetail(publicId);
 
   const { data: payments, isLoading: isPaymentsLoading } = useQuery({
     queryKey: ["payments"],
