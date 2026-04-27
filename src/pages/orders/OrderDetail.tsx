@@ -18,6 +18,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { OrderDetail, OrderStatus } from "@/types";
+import PaymentMethodsList from "@/components/checkout/PaymentMethodsList";
 
 /**
  * Menghasilkan gaya status untuk detail pesanan berdasarkan status terkini.
@@ -60,6 +61,14 @@ const OrderStatusPage = () => {
       return response.data;
     },
     enabled: !!publicId,
+  });
+
+  const { data: payments, isLoading: isPaymentsLoading } = useQuery({
+    queryKey: ["payments"],
+    queryFn: async () => {
+      const response = await api.get("/core/payments/");
+      return response.data;
+    },
   });
 
   if (isLoading) {
@@ -150,7 +159,7 @@ const OrderStatusPage = () => {
           </section>
 
           {order.status === 'Pending' && order.payment_proof === 'Belum diunggah' && (
-            <section>
+            <section className="space-y-6">
                <div className="border-2 border-dashed border-vanqis-accent bg-vanqis-accent/5 p-8 text-center flex flex-col items-center">
                 <div className="w-12 h-12 bg-vanqis-accent text-vanqis-base-white flex items-center justify-center mb-4">
                   <ImageIcon className="w-6 h-6" strokeWidth={1.5} />
@@ -168,6 +177,19 @@ const OrderStatusPage = () => {
                   Unggah Bukti Sekarang
                 </button>
               </div>
+
+              {isPaymentsLoading ? (
+                <div className="border border-vanqis-base-soft bg-vanqis-base-white p-6 flex justify-center items-center h-32">
+                  <Loader2 className="w-6 h-6 animate-spin text-vanqis-base-text/30" />
+                </div>
+              ) : (
+                <div className="border border-vanqis-base-soft bg-vanqis-base-white p-6">
+                  {(() => {
+                    const paymentList = Array.isArray(payments) ? payments : (payments?.results || payments?.data || []);
+                    return <PaymentMethodsList paymentMethods={paymentList} />;
+                  })()}
+                </div>
+              )}
             </section>
           )}
 
