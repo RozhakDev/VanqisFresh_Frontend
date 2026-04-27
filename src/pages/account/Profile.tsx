@@ -132,7 +132,7 @@ export default function Profile() {
                     <FormItem>
                       <FormLabel className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-1 block">Nama Depan *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Rozhak" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" {...field} />
+                        <Input placeholder="Contoh: Vanqis" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" {...field} />
                       </FormControl>
                       <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                     </FormItem>
@@ -145,7 +145,7 @@ export default function Profile() {
                     <FormItem>
                       <FormLabel className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-1 block">Nama Belakang</FormLabel>
                       <FormControl>
-                        <Input placeholder="Dev" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" value={field.value || ''} onChange={field.onChange} />
+                        <Input placeholder="Contoh: Fresh" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" value={field.value || ''} onChange={field.onChange} />
                       </FormControl>
                       <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                     </FormItem>
@@ -161,7 +161,7 @@ export default function Profile() {
                     <FormItem>
                       <FormLabel className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-1 block">Email *</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="rozhak@rozhak.xyz" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" {...field} />
+                        <Input type="email" placeholder="Contoh: user@vanqisfresh.com" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" {...field} />
                       </FormControl>
                       <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                     </FormItem>
@@ -174,7 +174,7 @@ export default function Profile() {
                     <FormItem>
                       <FormLabel className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-1 block">Nomor WhatsApp *</FormLabel>
                       <FormControl>
-                        <Input placeholder="083847921480" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" {...field} />
+                        <Input placeholder="Contoh: 08xxxxxxxxxx" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white" {...field} />
                       </FormControl>
                       <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                     </FormItem>
@@ -190,7 +190,7 @@ export default function Profile() {
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-1 block">Alamat Lengkap *</FormLabel>
                     <FormControl>
                       <Textarea 
-                        placeholder="Detail alamat untuk pengiriman..." 
+                        placeholder="Contoh: Jl. Melati No. 10, Bandung" 
                         className="min-h-[120px] resize-y rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text p-4 text-sm bg-vanqis-base-layout focus:bg-vanqis-base-white"
                         {...field} 
                       />

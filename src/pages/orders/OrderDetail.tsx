@@ -17,33 +17,9 @@ import {
   ArrowRight,
   CheckCircle2
 } from "lucide-react";
-import { OrderDetail, OrderStatus } from "@/types";
+import { OrderDetail } from "@/types";
 import PaymentMethodsList from "@/components/checkout/PaymentMethodsList";
-
-/**
- * Menghasilkan gaya status untuk detail pesanan berdasarkan status terkini.
- *
- * @param status - Status pesanan yang sedang ditampilkan.
- * @returns Konfigurasi tampilan status.
- */
-const getStatusConfig = (status: OrderStatus) => {
-  switch (status) {
-    case 'Pending':
-      return { color: 'text-vanqis-fresh-tomato border-vanqis-fresh-tomato bg-vanqis-fresh-tomato/5' };
-    case 'Confirmed':
-      return { color: 'text-vanqis-accent border-vanqis-accent bg-vanqis-accent/5' };
-    case 'Preparing':
-      return { color: 'text-vanqis-fresh-grape border-vanqis-fresh-grape bg-vanqis-fresh-grape/5' };
-    case 'Processing':
-      return { color: 'text-vanqis-fresh-banana border-vanqis-fresh-banana bg-vanqis-fresh-banana/5' };
-    case 'Shipping':
-      return { color: 'text-vanqis-accent border-vanqis-accent bg-vanqis-accent/5' };
-    case 'Completed':
-      return { color: 'text-vanqis-core-green border-vanqis-core-green bg-vanqis-core-green/5' };
-    default:
-      return { color: 'text-vanqis-base-text border-vanqis-base-text bg-vanqis-base-text/5' };
-  }
-};
+import { getOrderStatusConfig } from "@/lib/order";
 
 /**
  * Menampilkan informasi detail satu pesanan beserta status pembayarannya.
@@ -97,7 +73,7 @@ const OrderStatusPage = () => {
     );
   }
 
-  const statusConfig = getStatusConfig(order.status);
+  const statusConfig = getOrderStatusConfig(order.status);
 
   return (
     <div className="container-app py-8 md:py-12 max-w-5xl mx-auto relative">
@@ -124,7 +100,7 @@ const OrderStatusPage = () => {
           "px-4 py-2 border-2 inline-block font-black text-xs uppercase tracking-widest",
           statusConfig.color
         )}>
-          Status: {order.status}
+          Status: {statusConfig.label}
         </div>
       </div>
 

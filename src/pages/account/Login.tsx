@@ -134,7 +134,7 @@ const Login = () => {
                   <FormControl>
                     <Input 
                       type="email"
-                      placeholder="Contoh: rozhak@rozhak.xyz" 
+                      placeholder="Contoh: user@vanqisfresh.com" 
                       className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" 
                       {...field} 
                     />

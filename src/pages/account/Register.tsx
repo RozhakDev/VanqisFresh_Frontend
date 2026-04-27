@@ -120,7 +120,7 @@ const Register = () => {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Nama Depan *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Contoh: Rozhak" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
+                      <Input placeholder="Contoh: Vanqis" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                     </FormControl>
                     <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                   </FormItem>
@@ -133,7 +133,7 @@ const Register = () => {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Nama Belakang</FormLabel>
                     <FormControl>
-                      <Input placeholder="Contoh: Dev" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" value={field.value || ''} onChange={field.onChange} />
+                      <Input placeholder="Contoh: Fresh" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" value={field.value || ''} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                   </FormItem>
@@ -149,7 +149,7 @@ const Register = () => {
                   <FormItem>
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Username *</FormLabel>
                     <FormControl>
-                      <Input placeholder="rozhak_official" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
+                      <Input placeholder="Contoh: vanqis.fresh" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                     </FormControl>
                     <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                   </FormItem>
@@ -177,7 +177,7 @@ const Register = () => {
                 <FormItem>
                   <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Email *</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="rozhak@rozhak.xyz" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
+                    <Input type="email" placeholder="Contoh: user@vanqisfresh.com" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                   </FormControl>
                   <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                 </FormItem>
@@ -191,7 +191,7 @@ const Register = () => {
                 <FormItem>
                   <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Nomor WhatsApp *</FormLabel>
                   <FormControl>
-                    <Input placeholder="083847921480" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
+                    <Input placeholder="Contoh: 08xxxxxxxxxx" className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" {...field} />
                   </FormControl>
                   <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
                 </FormItem>
@@ -206,7 +206,7 @@ const Register = () => {
                   <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 mb-2 block">Alamat Lengkap *</FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="Jl. Merdeka No. 10, RT 02/RW 05..." 
+                      placeholder="Contoh: Jl. Melati No. 10, Bandung" 
                       className="min-h-[100px] resize-y rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text p-4 text-sm bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40"
                       {...field} 
                     />
