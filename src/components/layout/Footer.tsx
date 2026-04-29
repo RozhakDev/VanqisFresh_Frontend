@@ -17,9 +17,7 @@ export default function Footer() {
     }).catch(() => {});
   }, []);
 
-  const whatsapp = contacts.find(c => c.platform.toLowerCase() === 'whatsapp');
-  const instagram = contacts.find(c => c.platform.toLowerCase() === 'instagram');
-  const phoneNumber = whatsapp?.account_id || '';
+  const whatsappContact = contacts.find(c => c.platform.toLowerCase() === 'whatsapp');
 
   return (
     <footer className="bg-vanqis-base-white border-t border-vanqis-base-soft mt-24 pb-24 md:pb-12">
@@ -36,20 +34,15 @@ export default function Footer() {
             <p className="text-vanqis-base-text/70 text-sm leading-relaxed max-w-xs">
               Diambil langsung dari petani lokal di Banjarnegara. Kami mengantarkan produk segar pilihan terbaik langsung ke dapur Anda.
             </p>
-            <div className="flex items-center gap-4 pt-4">
-              {instagram && (
-                <>
-                  <a href={instagram.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
-                    Instagram
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-4">
+              {contacts.map((contact, idx) => (
+                <div key={contact.id} className="flex items-center gap-4">
+                  <a href={contact.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
+                    {contact.platform}
                   </a>
-                  <span className="text-vanqis-base-soft">|</span>
-                </>
-              )}
-              {(whatsapp || (!whatsapp && !instagram)) && (
-                <a href={whatsapp?.url || '#'} target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
-                  WhatsApp
-                </a>
-              )}
+                  {idx < contacts.length - 1 && <span className="text-vanqis-base-soft">|</span>}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -67,7 +60,7 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-vanqis-base-text font-black text-xs uppercase tracking-widest">Bantuan</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href={whatsapp?.url || '#'} className="text-vanqis-base-text/70 hover:text-vanqis-base-text transition-colors">Hubungi Kami</a></li>
+              <li><a href={whatsappContact?.url || '#'} className="text-vanqis-base-text/70 hover:text-vanqis-base-text transition-colors">Hubungi Kami</a></li>
             </ul>
           </div>
 

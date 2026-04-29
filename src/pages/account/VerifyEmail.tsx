@@ -137,8 +137,13 @@ const VerifyEmail = () => {
                     <Input 
                       placeholder="123456" 
                       maxLength={6}
+                      inputMode="numeric"
                       className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-center text-2xl font-black tracking-[0.5em] px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" 
                       {...field} 
+                      onChange={(e) => {
+                        const numericValue = e.target.value.replace(/[^0-9]/g, "");
+                        field.onChange(numericValue);
+                      }}
                     />
                   </FormControl>
                   <FormMessage className="text-[10px] font-medium text-vanqis-fresh-tomato uppercase tracking-wider mt-1" />
