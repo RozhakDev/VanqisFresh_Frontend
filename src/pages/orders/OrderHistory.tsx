@@ -5,11 +5,13 @@ import { id } from "date-fns/locale";
 import { 
   Loader2, 
   ShoppingBag,
-  ArrowRight
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { OrderHistoryItem } from "@/types";
 import { useAuthStore } from "@/stores/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getOrderStatusConfig } from "@/lib/order";
 import { useOrderHistory } from "@/hooks/useOrders";
@@ -22,6 +24,7 @@ import { useOrderHistory } from "@/hooks/useOrders";
 const Orders = () => {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading: authLoading } = useAuthStore();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -30,7 +33,7 @@ const Orders = () => {
     }
   }, [isAuthenticated, authLoading, navigate]);
 
-  const { data, isLoading, error } = useOrderHistory(isAuthenticated);
+  const { data, isLoading, error } = useOrderHistory(isAuthenticated, page);
 
   if (authLoading || isLoading) {
     return (
@@ -41,6 +44,7 @@ const Orders = () => {
   }
 
   const orders: OrderHistoryItem[] = data?.results || [];
+  const totalPages = data?.total_pages || (data?.count ? Math.ceil(data.count / 10) : 1);
 
   return (
     <div className="container-app py-8 md:py-12 max-w-5xl mx-auto">
@@ -132,6 +136,37 @@ const Orders = () => {
             );
           })}
           </div>
+
+          {/* Kontrol Paginasi */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-4 pt-12 border-t border-vanqis-base-soft mt-12">
+              <button
+                onClick={() => {
+                  setPage(p => Math.max(1, p - 1));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                disabled={page === 1}
+                className="w-11 h-11 border border-vanqis-base-soft flex items-center justify-center disabled:opacity-30 hover:border-vanqis-base-text hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-all text-vanqis-base-text outline-none"
+              >
+                <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
+              </button>
+              
+              <span className="text-xs font-bold uppercase tracking-widest text-vanqis-base-text px-4">
+                {page} / {totalPages}
+              </span>
+              
+              <button
+                onClick={() => {
+                  setPage(p => Math.min(totalPages, p + 1));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                disabled={page === totalPages}
+                className="w-11 h-11 border border-vanqis-base-soft flex items-center justify-center disabled:opacity-30 hover:border-vanqis-base-text hover:bg-vanqis-base-text hover:text-vanqis-base-white transition-all text-vanqis-base-text outline-none"
+              >
+                <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>

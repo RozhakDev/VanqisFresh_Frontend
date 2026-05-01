@@ -26,15 +26,19 @@ export const useOrderDetail = (publicId: string | undefined) => {
 
 /**
  * Hook khusus untuk mengambil daftar riwayat pesanan milik pengguna yang sedang masuk.
+ * Mendukung paginasi server-side.
  *
  * @param isAuthenticated - Flag penentu untuk memastikan query hanya berjalan saat user login.
- * @returns Objek state query dari React Query.
+ * @param page - Nomor halaman yang ingin dimuat.
+ * @returns Objek state query dari React Query (mendukung pagination backend).
  */
-export const useOrderHistory = (isAuthenticated: boolean) => {
+export const useOrderHistory = (isAuthenticated: boolean, page: number = 1) => {
   return useQuery<PaginatedResponse<OrderHistoryItem>>({
-    queryKey: ["orders"],
+    queryKey: ["orders", page],
     queryFn: async () => {
-      const response = await api.get("/orders/");
+      const response = await api.get("/orders/", {
+        params: { page }
+      });
       return response.data;
     },
     enabled: isAuthenticated,
