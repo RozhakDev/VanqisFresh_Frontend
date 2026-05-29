@@ -26,6 +26,7 @@ const PaymentUpload = () => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const { data: order, isLoading: isOrderLoading } = useQuery<OrderDetail>({
     queryKey: ["order", publicId],
@@ -98,7 +99,7 @@ const PaymentUpload = () => {
         },
       });
       toast.success("Bukti pembayaran berhasil diunggah!");
-      navigate(`/order/${publicId}`);
+      setIsSuccess(true);
     } catch (error: any) {
       const message = error.response?.data?.detail || error.response?.data?.image?.[0] || "Gagal mengunggah bukti pembayaran";
       toast.error(message);
@@ -122,6 +123,35 @@ const PaymentUpload = () => {
         <button onClick={() => navigate("/")} className="text-xs font-bold uppercase tracking-widest border-b border-vanqis-base-text pb-1 hover:text-vanqis-accent transition-colors">
           Kembali ke Beranda
         </button>
+      </div>
+    );
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="container-app py-16 md:py-24 flex flex-col items-center justify-center min-h-[60vh] relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-vanqis-core-green/5 rounded-full blur-3xl -z-10" />
+        
+        <div className="bg-vanqis-base-white p-10 md:p-16 border border-vanqis-base-soft shadow-vanqis-base-text/5 flex flex-col items-center text-center max-w-lg w-full relative z-10 transition-all duration-500 animate-in fade-in zoom-in-95">
+          <div className="w-24 h-24 bg-vanqis-core-green/10 flex items-center justify-center rounded-full mb-8 animate-bounce-short">
+             <CheckCircle2 className="w-10 h-10 text-vanqis-core-green" strokeWidth={2.5} />
+          </div>
+          
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-vanqis-base-text mb-3">
+            Pembayaran Terkirim
+          </h2>
+          
+          <p className="text-sm font-medium text-vanqis-base-text/60 leading-relaxed mb-8">
+            Terima kasih! Bukti transfer Anda telah berhasil diunggah. Kami akan memverifikasi pembayaran Anda dan segera memproses pesanan Anda.
+          </p>
+
+          <button 
+            onClick={() => navigate(`/order/${publicId}`)} 
+            className="w-full flex items-center justify-center h-14 bg-vanqis-base-text text-vanqis-base-white font-bold uppercase tracking-widest text-xs hover:bg-vanqis-accent transition-colors outline-none"
+          >
+            Lihat Detail Pesanan
+          </button>
+        </div>
       </div>
     );
   }
