@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
+import { useAuthStore } from "@/stores/auth";
 import api from "@/lib/api";
 import { Loader2, ArrowLeft, MailCheck } from "lucide-react";
 
@@ -33,7 +34,15 @@ type VerifyFormValues = z.infer<typeof verifySchema>;
 const VerifyEmail = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast.info("Anda sudah masuk ke akun.");
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
   const [isResending, setIsResending] = useState(false);
   
   const defaultEmail = location.state?.email || "";
@@ -117,8 +126,9 @@ const VerifyEmail = () => {
                   <FormControl>
                     <Input 
                       type="email"
-                      placeholder="rozhak@rozhak.xyz" 
-                      className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40" 
+                      placeholder="user@vanqisfresh.com" 
+                      readOnly
+                      className="rounded-none border-vanqis-base-soft focus-visible:ring-1 focus-visible:ring-vanqis-base-text focus-visible:border-vanqis-base-text h-12 text-sm px-4 bg-vanqis-base-layout focus:bg-vanqis-base-white transition-colors hover:border-vanqis-base-text/40 cursor-not-allowed opacity-70" 
                       {...field} 
                     />
                   </FormControl>

@@ -18,6 +18,8 @@ import Login from "./pages/account/Login";
 import Register from "./pages/account/Register";
 import Profile from "./pages/account/Profile";
 import VerifyEmail from "./pages/account/VerifyEmail";
+import ForgotPassword from "./pages/account/ForgotPassword";
+import ResetPassword from "./pages/account/ResetPassword";
 
 import OrderHistory from "./pages/orders/OrderHistory";
 
@@ -68,6 +70,8 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/orders" element={<OrderHistory />} />
                 <Route path="/product/:id" element={<ProductDetail />} />

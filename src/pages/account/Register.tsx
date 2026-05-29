@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
+import { useAuthStore } from "@/stores/auth";
 import api from "@/lib/api";
 import { Loader2, ArrowLeft } from "lucide-react";
 
@@ -38,7 +39,15 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
  */
 const Register = () => {
   const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast.info("Anda sudah masuk ke akun.");
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),

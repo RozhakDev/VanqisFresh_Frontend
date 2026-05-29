@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,7 +35,15 @@ const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const login = useAuthStore((state) => state.login);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast.info("Anda sudah masuk ke akun.");
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
   const redirectTo = (() => {
     const redirect = searchParams.get("redirect");
     if (!redirect) {
@@ -151,6 +159,9 @@ const Login = () => {
                 <FormItem>
                   <div className="flex items-center justify-between mb-2">
                     <FormLabel className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text/80 block">Password</FormLabel>
+                    <Link to="/forgot-password" className="text-[10px] font-bold uppercase tracking-widest text-vanqis-base-text hover:text-vanqis-accent transition-colors">
+                      Lupa Sandi?
+                    </Link>
                   </div>
                   <FormControl>
                     <Input 
