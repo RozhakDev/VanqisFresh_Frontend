@@ -86,20 +86,30 @@ const Login = () => {
     } catch (error: any) {
       const responseData = error.response?.data;
       
+      const verifiedError = Array.isArray(responseData?.errors?.is_verified) 
+        ? responseData.errors.is_verified[0] 
+        : responseData?.errors?.is_verified;
+
       const isVerifiedError = 
         responseData?.is_verified === false || 
-        responseData?.errors?.is_verified?.[0] === "False" ||
-        responseData?.errors?.is_verified?.[0] === false;
+        verifiedError === "False" ||
+        verifiedError === false;
 
       if (isVerifiedError) {
         toast.error("Email Anda belum diverifikasi. Silakan verifikasi terlebih dahulu.");
         navigate("/verify-email", { state: { email: values.email } });
       } else {
-        const message = 
-          responseData?.errors?.detail?.[0] || 
+        const detailError = responseData?.errors?.detail;
+        let message = 
+          (Array.isArray(detailError) ? detailError[0] : detailError) || 
           responseData?.detail || 
           responseData?.message || 
-          "Email atau password salah";
+          "Email atau kata sandi salah.";
+          
+        if (message === "No active account found with the given credentials") {
+            message = "Email atau kata sandi tidak valid. Silakan periksa kembali.";
+        }
+        
         toast.error(message);
       }
     } finally {

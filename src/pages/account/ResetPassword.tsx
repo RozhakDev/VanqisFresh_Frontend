@@ -88,12 +88,18 @@ const ResetPassword = () => {
       }
       
       if (!data?.otp_code && !data?.new_password && !data?.errors?.otp_code && !data?.errors?.new_password) {
-        const message =
+        const detailError = data?.errors?.detail;
+        let message =
           data?.error ||
-          data?.errors?.detail?.[0] ||
+          (Array.isArray(detailError) ? detailError[0] : detailError) ||
           data?.detail ||
           data?.message ||
-          "Gagal mereset kata sandi. Pastikan kode OTP benar.";
+          "Gagal mereset kata sandi. Pastikan kode OTP yang dimasukkan benar.";
+          
+        if (message === "Kode OTP tidak valid.") message = "Kode OTP tidak valid. Silakan periksa kembali.";
+        else if (message === "Kode OTP sudah kedaluwarsa.") message = "Kode OTP telah kedaluwarsa. Silakan minta kode OTP baru.";
+        else if (message === "Gagal mereset kata sandi. Pastikan kode OTP benar.") message = "Gagal mereset kata sandi. Pastikan kode OTP yang dimasukkan benar.";
+
         toast.error(message);
       }
     } finally {
@@ -121,12 +127,17 @@ const ResetPassword = () => {
       toast.success("Kode OTP baru telah dikirim ke email Anda.");
     } catch (error: any) {
       const data = error.response?.data;
-      const message =
+      const detailError = data?.errors?.detail;
+      let message =
         data?.error ||
-        data?.errors?.detail?.[0] ||
+        (Array.isArray(detailError) ? detailError[0] : detailError) ||
         data?.detail ||
         data?.message ||
         "Gagal mengirim ulang OTP. Silakan coba beberapa saat lagi.";
+        
+      if (message === "Harap tunggu 3 menit sebelum meminta OTP baru.") message = "Harap tunggu 3 menit sebelum meminta kode OTP baru.";
+      else if (message === "Gagal mengirim ulang OTP. Silakan coba beberapa saat lagi.") message = "Gagal mengirim ulang OTP. Silakan coba beberapa saat lagi.";
+
       toast.error(message);
     } finally {
       setIsResending(false);

@@ -77,12 +77,18 @@ const ForgotPassword = () => {
       } else if (data?.errors?.email) {
         requestForm.setError("email", { type: "server", message: data.errors.email[0] || data.errors.email });
       } else {
-        const message =
+        const detailError = data?.errors?.detail;
+        let message =
           data?.error ||
-          data?.errors?.detail?.[0] ||
+          (Array.isArray(detailError) ? detailError[0] : detailError) ||
           data?.detail ||
           data?.message ||
-          "Gagal mengirim OTP. Pastikan email terdaftar.";
+          "Gagal mengirim OTP. Pastikan email yang dimasukkan sudah benar.";
+          
+        if (message === "Pengguna dengan email ini tidak ditemukan.") {
+          message = "Alamat email tidak terdaftar di sistem kami.";
+        }
+        
         toast.error(message);
       }
     } finally {
