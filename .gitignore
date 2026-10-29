@@ -23,4 +23,4 @@ Thumbs.db
 .idea/
 
 # AI Context (custom)
-ai_context/
+.knowledge-base/
